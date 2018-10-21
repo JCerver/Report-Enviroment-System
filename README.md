@@ -8,7 +8,6 @@ El sistema permite ademas mostrar ya sea en la interfaz grafica o el en Display 
 La interfaz de software ádemas de lo antes mencionado nos permite seleccionar un mensaje en especifico y enviarlo al display LCD
 ***
 
-
 ## Caracteristicas
 ***
 Los mensajes deberán ser solamente con 140 carácteres de espacio, se debe de incluir la fecha y hora de emisión del mensaje
