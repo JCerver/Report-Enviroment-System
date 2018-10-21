@@ -1,89 +1,139 @@
+/****************               CONSTANTES                     *******************/
 //Salidas digitales
-#define PIN_F1 9                    //pin de fila 1 teclado matricial
-#define PIN_F2 8                    //pin de fila 2 teclado matricial
-#define PIN_F3 7                    //pin de fila 3 teclado matricial
-#define PIN_F4 6                    //pin de fila 4 teclado matricial
+#define PIN_F1 9                                      //pin de fila 1 teclado matricial
+#define PIN_F2 8                                      //pin de fila 2 teclado matricial
+#define PIN_F3 7                                      //pin de fila 3 teclado matricial
+#define PIN_F4 6                                      //pin de fila 4 teclado matricial
 
 //Entradas digitales
-#define PIN_C1 5                    //pin de columna 1 teclado matricial
-#define PIN_C2 4                    //pin de columna 2 teclado matricial
-#define PIN_C3 3                    //pin de columna 3 teclado matricial
-#define PIN_C4 2                    //pin de columna 4 teclado matricial
+#define PIN_C1 5                                      //pin de columna 1 teclado matricial
+#define PIN_C2 4                                      //pin de columna 2 teclado matricial
+#define PIN_C3 3                                      //pin de columna 3 teclado matricial
+#define PIN_C4 2                                      //pin de columna 4 teclado matricial
 
-char tecla = 0;                   //variable para almacenar la tecla oprimida
+/****************               VARIABLES         *******************/
+char tecla = 0;                                       //variable para almacenar la tecla oprimida
 
 void setupTecladoMatricial(){
+  //modo de los pines necesarios
   pinMode(PIN_F1, OUTPUT);
   pinMode(PIN_F2, OUTPUT);
   pinMode(PIN_F3, OUTPUT);
   pinMode(PIN_F4, OUTPUT);
 
+  //modo de los pines necesarios
   pinMode(PIN_C1, INPUT_PULLUP);
   pinMode(PIN_C2, INPUT_PULLUP);
   pinMode(PIN_C3, INPUT_PULLUP);
   pinMode(PIN_C4, INPUT_PULLUP);
 
-  digitalWrite(PIN_F1, HIGH);
-  digitalWrite(PIN_F2, HIGH);
-  digitalWrite(PIN_F3, HIGH);
-  digitalWrite(PIN_F4, HIGH);
+  /*****   valores iniciales para las filas del teclado matricial               ****/
+  digitalWrite(PIN_F1, HIGH);                         //doy un voltaje positivo a todas las fila 1 del teclado matricial
+  digitalWrite(PIN_F2, HIGH);                         //doy un voltaje positivo a todas las fila 2 del teclado matricial
+  digitalWrite(PIN_F3, HIGH);                         //doy un voltaje positivo a todas las fila 3 del teclado matricial
+  digitalWrite(PIN_F4, HIGH);                         //doy un voltaje positivo a todas las fila 4 del teclado matricial
 
   Serial.begin(9600);
 }
 
 void loopTecladoMatricial(){
+  
   //Verificando la fila 1
-  digitalWrite(PIN_F1, LOW);
-  if(digitalRead(PIN_C1) == LOW)
-    tecla = '1';
-  else if (digitalRead(PIN_C2) == LOW)
-    tecla = '2';
-  else if (digitalRead(PIN_C3) == LOW)
-    tecla = '3';
-  else if (digitalRead(PIN_C4) == LOW)
-    tecla = 'A';
-  digitalWrite(PIN_F1, HIGH);
+  verificarFila1();
 
   //Verificando la fila 2
-  digitalWrite(PIN_F2, LOW);
-  if(digitalRead(PIN_C1) == LOW)
-    tecla = '4';
-  else if (digitalRead(PIN_C2) == LOW)
-    tecla = '5';
-  else if (digitalRead(PIN_C3) == LOW)
-    tecla = '6';
-  else if (digitalRead(PIN_C4) == LOW)
-    tecla = 'B';
-  digitalWrite(PIN_F2, HIGH);
+  verificarFila2();
 
   //Verificando la fila 3
-  digitalWrite(PIN_F3, LOW);
-  if(digitalRead(PIN_C1) == LOW)
-    tecla = '7';
-  else if (digitalRead(PIN_C2) == LOW)
-    tecla = '8';
-  else if (digitalRead(PIN_C3) == LOW)
-    tecla = '9';
-  else if (digitalRead(PIN_C4) == LOW)
-    tecla = 'C';
-  digitalWrite(PIN_F3, HIGH);
+  verificarFila3();
 
   //Verificando la fila 4
-  digitalWrite(PIN_F4, LOW);
-  if(digitalRead(PIN_C1) == LOW)
-    tecla = '*';
-  else if (digitalRead(PIN_C2) == LOW)
-    tecla = '0';
-  else if (digitalRead(PIN_C3) == LOW)
-    tecla = '#';
-  else if (digitalRead(PIN_C4) == LOW)
-    tecla = 'D';
-    
-    
-  digitalWrite(PIN_F4, HIGH);
+  verificarFila4();
 
-  if(tecla != 0){
+  if(tecla != 0){                                     //solo si se oprimió alguna tecla se envia mensaje con la tecla que se oprimió
     Serial.println(tecla);
     tecla = 0;
   }
 }
+
+
+void verificarFila1(){
+  /*
+  Este método quita voltaje  una fila, cuando se presiona cualquier tecla de esa fila se envia un voltaje negativo dependiendo de la columna,
+  Se verifica en que columna se envio la señal mientras se revisaba esta fila y se conoce que tecla se presiono,
+  El valor se guarda en una variable para indicar que tecla se oprimio en caso de que fuera alguna de esta fila 
+  */
+  digitalWrite(PIN_F1, LOW);
+  if(digitalRead(PIN_C1) == LOW){                     //si se lee señal LOW de la columna 1 y se le de fila 1 un LOW hay un match
+    tecla = '1';
+  }else if (digitalRead(PIN_C2) == LOW){              //si se lee señal LOW de la columna 2 y se le de fila 1 un LOW hay un match
+    tecla = '2';
+  }else if (digitalRead(PIN_C3) == LOW){              //si se lee señal LOW de la columna 3 y se le de fila 1 un LOW hay un match
+    tecla = '3';
+  }else if (digitalRead(PIN_C4) == LOW){              //si se lee señal LOW de la columna 4 y se le de fila 1 un LOW hay un match
+    tecla = 'A';
+  }
+  digitalWrite(PIN_F1, HIGH);                         //una vez comprobada la fila se vuelve a mandar señal HIGH
+}
+
+void verificarFila2(){
+  /*
+  Este método quita voltaje  una fila, cuando se presiona cualquier tecla de esa fila se envia un voltaje negativo dependiendo de la columna,
+  Se verifica en que columna se envio la señal mientras se revisaba esta fila y se conoce que tecla se presiono,
+  El valor se guarda en una variable para indicar que tecla se oprimio en caso de que fuera alguna de esta fila 
+  */
+  digitalWrite(PIN_F2, LOW);
+  if(digitalRead(PIN_C1) == LOW){                     //si se lee señal LOW de la columna 1 y se le de fila 2 un LOW hay un match
+    tecla = '4';
+  }else if (digitalRead(PIN_C2) == LOW){              //si se lee señal LOW de la columna 2 y se le de fila 2 un LOW hay un match
+    tecla = '5';
+  }else if (digitalRead(PIN_C3) == LOW){              //si se lee señal LOW de la columna 3 y se le de fila 2 un LOW hay un match
+    tecla = '6';
+  }else if (digitalRead(PIN_C4) == LOW){              //si se lee señal LOW de la columna 4 y se le de fila 2 un LOW hay un match
+    tecla = 'B';
+  }
+  digitalWrite(PIN_F2, HIGH);                         //una vez comprobada la fila se vuelve a mandar señal HIGH
+}
+
+
+
+void verificarFila3(){
+  /*
+  Este método quita voltaje  una fila, cuando se presiona cualquier tecla de esa fila se envia un voltaje negativo dependiendo de la columna,
+  Se verifica en que columna se envio la señal mientras se revisaba esta fila y se conoce que tecla se presiono,
+  El valor se guarda en una variable para indicar que tecla se oprimio en caso de que fuera alguna de esta fila 
+  */
+  digitalWrite(PIN_F3, LOW);
+  if(digitalRead(PIN_C1) == LOW){                     //si se lee señal LOW de la columna 1 y se le de fila 3 un LOW hay un match
+    tecla = '7';
+  }else if (digitalRead(PIN_C2) == LOW){              //si se lee señal LOW de la columna 2 y se le de fila 3 un LOW hay un match
+    tecla = '8';
+  }else if (digitalRead(PIN_C3) == LOW){              //si se lee señal LOW de la columna 3 y se le de fila 3 un LOW hay un match
+    tecla = '9';
+  }else if (digitalRead(PIN_C4) == LOW){              //si se lee señal LOW de la columna 4 y se le de fila 3 un LOW hay un match
+    tecla = 'C';
+  }
+  digitalWrite(PIN_F3, HIGH);                         //una vez comprobada la fila se vuelve a mandar señal HIGH
+}
+
+
+void verificarFila4(){
+  /*
+  Este método quita voltaje  una fila, cuando se presiona cualquier tecla de esa fila se envia un voltaje negativo dependiendo de la columna,
+  Se verifica en que columna se envio la señal mientras se revisaba esta fila y se conoce que tecla se presiono,
+  El valor se guarda en una variable para indicar que tecla se oprimio en caso de que fuera alguna de esta fila 
+  */
+  digitalWrite(PIN_F4, LOW);
+  if(digitalRead(PIN_C1) == LOW){                     //si se lee señal LOW de la columna 1 y se le de fila 4 un LOW hay un match
+    tecla = '*';
+  }else if (digitalRead(PIN_C2) == LOW){              //si se lee señal LOW de la columna 2 y se le de fila 4 un LOW hay un match
+    tecla = '0';
+  }else if (digitalRead(PIN_C3) == LOW){              //si se lee señal LOW de la columna 3 y se le de fila 4 un LOW hay un match
+    tecla = '#';
+  }else if (digitalRead(PIN_C4) == LOW){              //si se lee señal LOW de la columna 4 y se le de fila 4 un LOW hay un match
+    tecla = 'D';
+  }
+  digitalWrite(PIN_F4, HIGH);                         //una vez comprobada la fila se vuelve a mandar señal HIGH
+}
+
+

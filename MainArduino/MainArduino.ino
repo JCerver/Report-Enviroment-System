@@ -1,20 +1,31 @@
+/************************************************
+  Programa: Sistema de simulación de alarma de seguridad
 
+  Autores: 
+      José Guadalupe de Jesús Cervera Barbosa.
+      Miguel Ángel Ramírez Lira.
+      Alfredo Valdivia Barajas.
+
+ Descripción del programa:
+ 
+
+ ***********************************************/
 
 
 void setup() {
-  //setupTecladoMatricial();
+  setupTecladoMatricial();
   //setupDisplay();
   //setupSensorLuz();
   //setupSensorTemperatura();
-  setupSensorHumedad();
+  //setupSensorHumedad();
 }
 
 void loop() {
-  //loopTecladoMatricial();
+  loopTecladoMatricial();
   //loopDisplay();
   //loopSensorLuz();
   //loopSensorTemperatura();
-  loopSensorHumedad();
+  //loopSensorHumedad();
 
 }
 
