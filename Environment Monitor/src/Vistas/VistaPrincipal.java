@@ -69,7 +69,7 @@ public class VistaPrincipal extends JFrame {
                 marco.pack(); // establece marco interno al tamaño del contenido
                 escritorioPadre.add(marco); // adjunta marco interno
                 marco.setVisible(true); // muestra marco interno 
-            } // fin del método actionPerformed
+            } // fin del método actionPerformed 
         } // fin de la clase interna anónima
         ); // fin de la llamada a addActionListener
 

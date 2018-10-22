@@ -20,9 +20,11 @@ import javax.swing.event.InternalFrameEvent;
 public class ControladorMensajes extends InternalFrameAdapter implements ActionListener{
 
      private PanelMensajes accesoControles;
+     private ControladorArduino controladorArduino2;
 
     public ControladorMensajes(PanelMensajes accesoControles) {
         this.accesoControles = accesoControles;
+        controladorArduino2 = new ControladorArduino();
     }
      
      public void internalFrameOpened(InternalFrameEvent e){
@@ -33,7 +35,8 @@ public class ControladorMensajes extends InternalFrameAdapter implements ActionL
     @Override
     public void actionPerformed(ActionEvent e) {
        if(e.getSource()==accesoControles.getBtnGuardar()){
-           System.out.println("Fui presionado");
+           //System.out.println("Fui presionado");
+           controladorArduino2.enviarMensaje(accesoControles.getTxtMensajeNuevo().getText());
        }
     }
     
