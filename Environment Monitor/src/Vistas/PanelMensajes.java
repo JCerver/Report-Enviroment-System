@@ -32,7 +32,7 @@ public class PanelMensajes extends JPanel {
     private JButton btnGuardar, btnMostrar, btnAnterior, btnSiguiente;
     private JTable tabla;
     private DefaultTableModel dtm;
-    String columnas[] = {"ID", "Mensaje"};
+    String columnas[] = {"Mensaje", "Fecha","Hora"};
     private GridBagLayout esquema;
     private GridBagConstraints restricciones;
 
@@ -61,7 +61,7 @@ public class PanelMensajes extends JPanel {
         panelControlesMensajesPrevio = new JPanel(new BorderLayout());
         dtm = new DefaultTableModel(null, columnas);
         tabla = new JTable(dtm);
-        tabla.setPreferredScrollableViewportSize(new Dimension(300, 400));
+        tabla.setPreferredScrollableViewportSize(new Dimension(500, 400));
         JScrollPane scroll = new JScrollPane(tabla);
 
         //Creación del panel que contiene los controles,con 
@@ -72,7 +72,7 @@ public class PanelMensajes extends JPanel {
         panelVistaMensajes.setLayout(esquema);
         restricciones = new GridBagConstraints();
         restricciones.anchor = GridBagConstraints.WEST;
-        btnMostrar = new JButton("Mostrar");
+        btnMostrar = new JButton("Mostrar en LCD");
         btnSiguiente = new JButton("Siguiente >>");
         btnAnterior = new JButton("Anterior <<");
         lblHistorial = new JLabel("Mensaje completo:");

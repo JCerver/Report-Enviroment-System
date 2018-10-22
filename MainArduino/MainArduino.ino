@@ -31,6 +31,7 @@ LiquidCrystal lcd(RS, E, D4, D5, D6, D7);
  ***********************************************/
 
 void setup() {
+  
   //setupTecladoMatricial();
   setupDisplay();
   //setupSensorLuz();
@@ -40,6 +41,7 @@ void setup() {
 }
 
 void loop() {
+  String text=Serial.readString();
   //loopTecladoMatricial();
   loopDisplay();
   //loopSensorLuz();
