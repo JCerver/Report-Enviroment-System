@@ -12,6 +12,7 @@
  ***********************************************/
 
 void setup() {
+  
   //setupTecladoMatricial();
   setupDisplay();
   //setupSensorLuz();
@@ -20,6 +21,7 @@ void setup() {
 }
 
 void loop() {
+  String text=Serial.readString();
   //loopTecladoMatricial();
   loopDisplay();
   //loopSensorLuz();

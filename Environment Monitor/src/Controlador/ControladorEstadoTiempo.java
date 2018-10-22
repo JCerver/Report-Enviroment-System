@@ -20,9 +20,9 @@ public class ControladorEstadoTiempo extends InternalFrameAdapter implements Act
     private PanelEstadoTiempo accesoControles;
     private ControladorArduino controladorArduino;
 
-    public ControladorEstadoTiempo(PanelEstadoTiempo accesoControles) {
+    public ControladorEstadoTiempo(PanelEstadoTiempo accesoControles,ControladorArduino controladorArduino) {
         this.accesoControles = accesoControles;
-        controladorArduino = new ControladorArduino();
+        this.controladorArduino = controladorArduino;
     }
 
     public void internalFrameOpened(InternalFrameEvent e) {
@@ -55,7 +55,7 @@ public class ControladorEstadoTiempo extends InternalFrameAdapter implements Act
         } else if (e.getSource() == accesoControles.getBtnPausar()) {
             System.out.println("Fui presionado y pauso");
             controladorArduino.enviarMensaje("Estoy pausado");
-
+ 
         }
     }
 

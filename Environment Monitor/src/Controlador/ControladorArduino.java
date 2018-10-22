@@ -39,7 +39,7 @@ public class ControladorArduino {
     public ControladorArduino() {
         try {
             //Arduino.arduinoRXTX("/dev/ttyUSB0", 9000, (jssc.SerialPortEventListener) eventoArduino);
-             Arduino.arduinoTX("/dev/ttyUSB0", 9600);
+             Arduino.arduinoTX("/dev/ttyACM0", 9600);
         } catch (ArduinoException ex) {
             Logger.getLogger(ControladorArduino.class.getName()).log(Level.SEVERE, null, ex);
         }

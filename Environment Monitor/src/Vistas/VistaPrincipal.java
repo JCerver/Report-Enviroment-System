@@ -5,6 +5,7 @@
  */
 package Vistas;
 
+import Controlador.ControladorArduino;
 import Controlador.ControladorEstadoTiempo;
 import Controlador.ControladorMensajes;
 import java.awt.BorderLayout;
@@ -26,6 +27,7 @@ import javax.swing.UIManager;
 public class VistaPrincipal extends JFrame {
 
     private JDesktopPane escritorioPadre;
+    private ControladorArduino controladorArduino;
     
     public VistaPrincipal() {
         super("Panel de control");
@@ -49,6 +51,8 @@ public class VistaPrincipal extends JFrame {
         menuVer.add(jmiMensajes);
         menuVer.add(jmiSensores);
         
+        controladorArduino = new ControladorArduino();
+        
         menuPrincipal.add(menuVer);
         barra.add(menuPrincipal); // agrega el menú Agregar a la barra de menús
         setJMenuBar(barra); // establece la barra de menús para esta aplicación
@@ -65,7 +69,7 @@ public class VistaPrincipal extends JFrame {
                         "Control de mensajes", true, true, true, true);
                 PanelMensajes panelMensaje = new PanelMensajes();
                 marco.add(panelMensaje, BorderLayout.CENTER); // agrega el panel
-                marco.addInternalFrameListener(new ControladorMensajes(panelMensaje));
+                marco.addInternalFrameListener(new ControladorMensajes(panelMensaje,controladorArduino));
                 marco.pack(); // establece marco interno al tamaño del contenido
                 escritorioPadre.add(marco); // adjunta marco interno
                 marco.setVisible(true); // muestra marco interno 
@@ -80,7 +84,7 @@ public class VistaPrincipal extends JFrame {
                         "Control de sensores", true, true, true, true);
                 PanelEstadoTiempo panelSensores = new PanelEstadoTiempo();
                 marco.add(panelSensores, BorderLayout.CENTER); // agrega el panel
-                marco.addInternalFrameListener(new ControladorEstadoTiempo(panelSensores));
+                marco.addInternalFrameListener(new ControladorEstadoTiempo(panelSensores,controladorArduino));
                 marco.pack(); // establece marco interno al tamaño del contenido
                 escritorioPadre.add(marco); // adjunta marco interno
                 marco.setVisible(true); // muestra marco interno 
