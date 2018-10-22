@@ -5,6 +5,7 @@
  */
 package Vistas;
 
+import Controlador.ControladorEstadoTiempo;
 import Controlador.ControladorMensajes;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -79,7 +80,7 @@ public class VistaPrincipal extends JFrame {
                         "Control de sensores", true, true, true, true);
                 PanelEstadoTiempo panelSensores = new PanelEstadoTiempo();
                 marco.add(panelSensores, BorderLayout.CENTER); // agrega el panel
-                //marco.addInternalFrameListener(new ControladorMensajes(panelMensaje));
+                marco.addInternalFrameListener(new ControladorEstadoTiempo(panelSensores));
                 marco.pack(); // establece marco interno al tamaño del contenido
                 escritorioPadre.add(marco); // adjunta marco interno
                 marco.setVisible(true); // muestra marco interno 
