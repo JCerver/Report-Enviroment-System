@@ -14,7 +14,7 @@ LiquidCrystal lcd(RS, E, D4, D5, D6, D7);
 void setupDisplay() {
   lcd.begin(20, 4);                         //método para iniciar el display (Recibe: anchura y altura de caracteres))
   Serial.begin(9600);
-  lcd.write("");
+  lcd.write("Welcome");
 
 }
 

@@ -13,17 +13,17 @@
 
 void setup() {
   //setupTecladoMatricial();
-  //setupDisplay();
+  setupDisplay();
   //setupSensorLuz();
-  setupSensorTemperatura();
+  //setupSensorTemperatura();
   //setupSensorHumedad();
 }
 
 void loop() {
   //loopTecladoMatricial();
-  //loopDisplay();
+  loopDisplay();
   //loopSensorLuz();
-  loopSensorTemperatura();
+  //loopSensorTemperatura();
   //loopSensorHumedad();
 
 }
