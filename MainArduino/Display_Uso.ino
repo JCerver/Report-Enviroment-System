@@ -1,17 +1,35 @@
 //#include <LiquidCrystal.h>                //anadir la libreria para gestionar un display LCD
 
 /****************               CONSTANTES                     *******************/
+<<<<<<< HEAD
 
 /*
+=======
+<<<<<<< HEAD
+/*#define RS 11                               //pin de conexión a punto RS del LCD display
+#define E  10                               //pin de conexión a punto E del LCD display
+#define D4 9                                //pin de conexión a punto D4 del LCD display
+#define D5 6                                //pin de conexión a punto D5 del LCD display
+#define D6 5                                //pin de conexión a punto R6 del LCD display
+#define D7 3                                //pin de conexión a punto R7 del LCD display
+=======
+>>>>>>> 66b10f6d9cc72ddacc6adcfdb39e1091a571368b
 #define RS 7                               //pin de conexión a punto RS del LCD display
 #define E  6                               //pin de conexión a punto E del LCD display
 #define D4 5                                //pin de conexión a punto D4 del LCD display
 #define D5 4                                //pin de conexión a punto D5 del LCD display
 #define D6 3                                //pin de conexión a punto R6 del LCD display
 #define D7 2                                //pin de conexión a punto R7 del LCD display
+<<<<<<< HEAD
 */
 /****************         Construcor para gestionar el LCD Diaplay       *******************/
 //LiquidCrystal lcd(RS, E, D4, D5, D6, D7);
+=======
+>>>>>>> dd2d0fa5ca82aae91dbfdaf1da741ae651caa1ce
+
+/****************         Construcor para gestionar el LCD Diaplay       *******************/
+/*LiquidCrystal lcd(RS, E, D4, D5, D6, D7);*/
+>>>>>>> 66b10f6d9cc72ddacc6adcfdb39e1091a571368b
 
 void setupDisplay() {
   lcd.begin(20, 4);                         //método para iniciar el display (Recibe: anchura y altura de caracteres))
