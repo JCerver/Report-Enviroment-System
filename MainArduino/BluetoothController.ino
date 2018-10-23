@@ -13,10 +13,11 @@ void loopBluetooth() {
  
 
     if (BT1.available()){
-      //Serial.println("No mames");
+      
+      //analogWrite(9, BT1.read());
+      //lcd.write(BT1.read());
       Serial.write(BT1.read());
-      lcd.clear();
-      lcd.write(Serial.read());
+      
     }
            
      if (Serial.available())

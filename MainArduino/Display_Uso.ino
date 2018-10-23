@@ -1,7 +1,6 @@
-#include <LiquidCrystal.h>                //anadir la libreria para gestionar un display LCD
+//#include <LiquidCrystal.h>                //anadir la libreria para gestionar un display LCD
 
 /****************               CONSTANTES                     *******************/
-<<<<<<< HEAD
 /*#define RS 11                               //pin de conexión a punto RS del LCD display
 #define E  10                               //pin de conexión a punto E del LCD display
 #define D4 9                                //pin de conexión a punto D4 del LCD display
