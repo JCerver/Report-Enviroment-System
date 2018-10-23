@@ -36,25 +36,23 @@ public class ControladorEstadoTiempo extends InternalFrameAdapter implements Act
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == accesoControles.getBtnHumedad()) {
-            //enviar tipo (indicar obtencion de datos,, impresion de mensaje)
-            //controladorArduino.getValor();
-            controladorArduino.enviarMensaje("La humedad es:");
-
+            controladorArduino.enviarMensaje("2");
             System.out.println("Fui presionado y soy humedad");
         } else if (e.getSource() == accesoControles.getBtnTemperatura()) {
-            controladorArduino.enviarMensaje("La Temperatura es:");
+            controladorArduino.enviarMensaje("3");
             System.out.println("Fui presionado y soy temperatura");
         } else if (e.getSource() == accesoControles.getBtnLuminosidad()) {
-            controladorArduino.enviarMensaje("La luminosidad es:");
             System.out.println("Fui presionado y soy luminosidad");
-
+                controladorArduino.enviarMensaje("4");
         } else if (e.getSource() == accesoControles.getBtnDesplazar()) {
+            //controladorArduino.enviarMensaje("1");
             System.out.println("Fui presionado y desplazo");
-            controladorArduino.enviarMensaje("Desplazar derecha");
+            //controladorArduino.enviarMensaje("1Desplazar derecha");
 
         } else if (e.getSource() == accesoControles.getBtnPausar()) {
+            //controladorArduino.enviarMensaje("1");
             System.out.println("Fui presionado y pauso");
-            controladorArduino.enviarMensaje("Estoy pausado");
+            //controladorArduino.enviarMensaje("1Estoy pausado");
  
         }
     }
