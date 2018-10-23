@@ -5,19 +5,7 @@ SoftwareSerial BT1(12,13); // RX | TX
 
 
 
-#include <LiquidCrystal.h>                //anadir la libreria para gestionar un display LCD
 
-/****************               CONSTANTES                     *******************/
-#define RS 7                               //pin de conexión a punto RS del LCD display
-#define E  6                               //pin de conexión a punto E del LCD display
-#define D4 5                                //pin de conexión a punto D4 del LCD display
-#define D5 4                                //pin de conexión a punto D5 del LCD display
-#define D6 3                                //pin de conexión a punto R6 del LCD display
-#define D7 2                                //pin de conexión a punto R7 del LCD display
-
-
-/****************         Construcor para gestionar el LCD Diaplay       *******************/
-LiquidCrystal lcd(RS, E, D4, D5, D6, D7);
 /************************************************
   Programa: Sistema de simulación de alarma de seguridad
 
@@ -132,15 +120,15 @@ long timeCounter = 0;
 boolean tecladoOprimido=false;
 
 void setup() {
-<<<<<<< HEAD
+
   
   //setupTecladoMatricial();
   //setupDisplay();
-=======
+
 
   setupTecladoMatricial();
   setupDisplay();
-<<<<<<< HEAD
+
   setupSensorLuz();
   setupSensorTemperatura();
   setupSensorHumedad();
@@ -263,8 +251,7 @@ void mostrarLuminosidad() {
 
 
 
-=======
->>>>>>> 5fdd6a0e88e4b812bace23e1ff894270538416d7
+
   //setupSensorLuz();
   //setupSensorTemperatura();
   //setupSensorHumedad();
@@ -282,4 +269,3 @@ void loop() {
   loopBluetooth();
   
 }
->>>>>>> 66b10f6d9cc72ddacc6adcfdb39e1091a571368b
