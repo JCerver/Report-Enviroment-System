@@ -58,6 +58,7 @@ public class ControladorMensajes extends InternalFrameAdapter implements ActionL
         accesoControles.getBtnGuardar().addActionListener(this);
          accesoControles.getBtnMostrar().addActionListener(this);
         accesoControles.getTabla().addMouseListener(this);
+        accesoControles.getBtnEliminar().addActionListener(this);
         abrirArchivo();
         imprimirMensajes();
         actualizarTabla();
@@ -180,6 +181,10 @@ public class ControladorMensajes extends InternalFrameAdapter implements ActionL
             String fechaCompleta=fechaLeida+"      "+HoraLeida;
             controladorArduino2.enviarMensaje("      "+fechaCompleta);
             
+        }else if(e.getSource() == accesoControles.getBtnEliminar()){
+            eliminarDeTabla();
+            escribirArchivo();
+            actualizarTabla();
         }
     }
 
@@ -238,6 +243,13 @@ public class ControladorMensajes extends InternalFrameAdapter implements ActionL
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+    
+    
+    void eliminarDeTabla(){
+        if(filaSelec>0){
+            mensajes.remove(filaSelec);
+        }
     }
 
 }

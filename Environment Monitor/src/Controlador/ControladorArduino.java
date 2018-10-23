@@ -97,7 +97,7 @@ public class ControladorArduino {
     public ControladorArduino() {
 
         try {
-            Arduino.arduinoRXTX("/dev/ttyACM1", 9600, eventoArduino);
+            Arduino.arduinoRXTX("/dev/ttyACM0", 9600, eventoArduino);
             //Arduino.arduinoTX("/dev/ttyACM0", 9600);
         } catch (ArduinoException ex) {
             Logger.getLogger(ControladorArduino.class.getName()).log(Level.SEVERE, null, ex);

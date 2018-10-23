@@ -1,11 +1,6 @@
+
 #include <SoftwareSerial.h>
-
-SoftwareSerial BT1(12,13); // RX | TX
-
-
-
-
-
+#include <LiquidCrystal.h>                //anadir la libreria para gestionar un display LCD
 /************************************************
   Programa: Sistema de simulación de alarma de seguridad
 
@@ -17,12 +12,18 @@ SoftwareSerial BT1(12,13); // RX | TX
   Descripción del programa:
 
 
- ***********************************************/
+ **********************************************/
 
 
 
- /*-----------------------------------------------------------           PARA USO DEL DISPLAY               */
-#include <LiquidCrystal.h>                //anadir la libreria para gestionar un display LCD
+/*-----------------------------------------------------------           PARA USO DEL DISPLAY               */
+
+
+
+
+
+//Serial para el módulo Bluetooth
+SoftwareSerial BT1(12, 13); // RX | TX
 
 /****************               CONSTANTES                     *******************/
 #define RS 7                               //pin de conexión a punto RS del LCD display
@@ -42,7 +43,7 @@ LiquidCrystal lcd(RS, E, D4, D5, D6, D7);
 
 
 
- /*-----------------------------------------------------------           PARA USO DEL SERSOR DE HUMEDAD               */
+/*-----------------------------------------------------------           PARA USO DEL SERSOR DE HUMEDAD               */
 #include <DHT.h>                                                    //anadir la libreria para gestionar un display LCD
 
 /****************               CONSTANTES                     *******************/
@@ -62,7 +63,7 @@ DHT dht(DHTPIN, DHTTYPE);
 
 
 
- /*-----------------------------------------------------------           PARA USO DEL SERSOR DE LUMINOSIDAD               */
+/*-----------------------------------------------------------           PARA USO DEL SERSOR DE LUMINOSIDAD               */
 /****************               CONSTANTES                     *******************/
 const long A = 5000;                                                        //Resistencia en oscuridad en KΩ
 const int B = 15;                                                           //Resistencia a la luz (10 Lux) en KΩ
@@ -76,7 +77,7 @@ int ilum;
 
 
 
- /*-----------------------------------------------------------           PARA USO DEL SERSOR DE TEMPERATURA               */
+/*-----------------------------------------------------------           PARA USO DEL SERSOR DE TEMPERATURA               */
 
 /****************               CONSTANTES                     *******************/
 #define SENSOR_TEMPERATURA 1                            //pin de entrada analogica donde esta conectado el sensor de humedad
@@ -91,7 +92,7 @@ float temperatura = 0;                                  //variable que guardará
 
 
 
- /*-----------------------------------------------------------           PARA USO DEL TECLADO MATRICIAL               */
+/*-----------------------------------------------------------           PARA USO DEL TECLADO MATRICIAL               */
 
 /****************               CONSTANTES                     *******************/
 //Salidas digitales
@@ -117,11 +118,11 @@ int opcion;
 
 const int timeThreshold = 150;
 long timeCounter = 0;
-boolean tecladoOprimido=false;
+boolean tecladoOprimido = false;
 
 void setup() {
 
-  
+
   //setupTecladoMatricial();
   //setupDisplay();
 
@@ -132,17 +133,18 @@ void setup() {
   setupSensorLuz();
   setupSensorTemperatura();
   setupSensorHumedad();
+  setupBluetooth();
 }
 
 void loop() {
 
-    loopTecladoMatricial();
- 
-  
+  loopTecladoMatricial();
+
+
 
 
   verificarOpcion();
-  
+
   if (opcion == '2') {
     mostrarHumedad();
   } else if (opcion == '3') {
@@ -151,21 +153,21 @@ void loop() {
     mostrarLuminosidad();
   }
 
+  loopBluetooth();
 
-  
 
-  
+
 
 
 }
 
-void verificarOpcion(){
+void verificarOpcion() {
   if (Serial.available()) {
     //delay(100);
     opcion = Serial.read();
     isMedicionClimatica = false;
     lcd.clear();
-    
+
     if (Serial.available() > 0) {
       if (opcion == '2' || opcion == '3' || opcion == '4') {
         isMedicionClimatica = true;
@@ -183,9 +185,9 @@ void verificarOpcion(){
       }
     }
 
-  }    
+  }
 }
-  
+
 void mostrarHumedad() {
   lcd.noAutoscroll();
 
@@ -246,26 +248,4 @@ void mostrarLuminosidad() {
       break;
     }
   }
-}
-
-
-
-
-
-  //setupSensorLuz();
-  //setupSensorTemperatura();
-  //setupSensorHumedad();
-  setupBluetooth();
-  
-}
-
-void loop() {
-  //String text=Serial.readString();
-  //loopTecladoMatricial();
-  //loopDisplay();
-  //loopSensorLuz();
-  //loopSensorTemperatura();
-  //loopSensorHumedad();
-  loopBluetooth();
-  
 }

@@ -29,7 +29,7 @@ public class PanelMensajes extends JPanel {
     private JLabel lblTextoIngresar, lblHistorial;
     private JTextArea txtMensajeNuevo, txtMensajeHistorial;
     private JScrollPane scrollpane1, scrollpane12;
-    private JButton btnGuardar, btnMostrar, btnAnterior, btnSiguiente;
+    private JButton btnGuardar, btnMostrar, btnAnterior, btnSiguiente,btnEliminar;
     private JTable tabla;
     private DefaultTableModel dtm;
     String columnas[] = {"Mensaje", "Fecha","Hora"};
@@ -55,6 +55,9 @@ public class PanelMensajes extends JPanel {
 
         btnGuardar = new JButton("Guardar");
         panelControlesMensajeNuevo.add(btnGuardar);
+        
+        btnEliminar = new JButton("Eliminar mensaje");
+        
 
         panelContenedorTabbed = new JPanel(new BorderLayout());
 
@@ -83,6 +86,9 @@ public class PanelMensajes extends JPanel {
         agregarComponente(btnAnterior, 0, 0, 1, 1);
         agregarComponente(btnMostrar, 1, 0, 1, 1);
         agregarComponente(btnSiguiente, 2, 0, 1, 1);
+        agregarComponente(btnEliminar, 3, 0, 1, 1);
+        
+        
 
         panelControlesMensajesPrevio.add(scroll, BorderLayout.WEST);
         panelControlesMensajesPrevio.add(panelVistaMensajes, BorderLayout.CENTER);
@@ -168,6 +174,14 @@ public class PanelMensajes extends JPanel {
 
     public void setDtm(DefaultTableModel dtm) {
         this.dtm = dtm;
+    }
+
+    public JButton getBtnEliminar() {
+        return btnEliminar;
+    }
+
+    public void setBtnEliminar(JButton btnEliminar) {
+        this.btnEliminar = btnEliminar;
     }
     
     
