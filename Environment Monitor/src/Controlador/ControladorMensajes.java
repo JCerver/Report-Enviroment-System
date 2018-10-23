@@ -43,6 +43,8 @@ public class ControladorMensajes extends InternalFrameAdapter implements ActionL
     private int filaSelec;
     private Calendar c;
     Date date;
+     String fechaLeida;
+     String HoraLeida;
 
     public ControladorMensajes(PanelMensajes accesoControles,ControladorArduino controladorArduino) {
         this.accesoControles = accesoControles;
@@ -170,13 +172,13 @@ public class ControladorMensajes extends InternalFrameAdapter implements ActionL
             mensajes.add(m);
             escribirArchivo();
             actualizarTabla();
+            controladorArduino2.enviarMensaje("1");
             controladorArduino2.enviarMensaje(accesoControles.getTxtMensajeNuevo().getText());
         }else if(e.getSource() == accesoControles.getBtnMostrar()){
-            //System.out.println("a huevo perros");
-            
+            controladorArduino2.enviarMensaje("1");//para indicar que es un mensaje
             controladorArduino2.enviarMensaje(accesoControles.getTxtMensajeHistorial().getText());
-            String fechaCompleta=getFecha()+"   "+getHora();
-            controladorArduino2.enviarMensaje(fechaCompleta);
+            String fechaCompleta=fechaLeida+"      "+HoraLeida;
+            controladorArduino2.enviarMensaje("      "+fechaCompleta);
             
         }
     }
@@ -211,6 +213,10 @@ public class ControladorMensajes extends InternalFrameAdapter implements ActionL
         if (e.getSource() == accesoControles.getTabla()) {
             filaSelec = accesoControles.getTabla().getSelectedRow();
             accesoControles.getTxtMensajeHistorial().setText(String.valueOf(accesoControles.getDtm().getValueAt(filaSelec, 0)));
+            fechaLeida=String.valueOf(accesoControles.getDtm().getValueAt(filaSelec, 1));
+            HoraLeida=String.valueOf(accesoControles.getDtm().getValueAt(filaSelec, 2));
+             System.out.println(fechaLeida);
+             System.out.println(HoraLeida);
         }
     }
 
