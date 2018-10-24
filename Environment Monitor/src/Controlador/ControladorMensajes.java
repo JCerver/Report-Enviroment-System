@@ -47,11 +47,91 @@ public class ControladorMensajes extends InternalFrameAdapter implements ActionL
         mensajes = new ArrayList();
         c = Calendar.getInstance();
         date = new Date();
+         
+       
+        new hilo(controladorArduino2).start();
     }
 
+    class hilo extends Thread{
+            private ControladorArduino controladorArduino;
+            
+            public hilo(ControladorArduino controladorArduino) {
+                this.controladorArduino = controladorArduino;
+            }
+
+            @Override
+            public void run() {
+                super.run();
+                while(true){
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ControladorMensajes.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    if(controladorArduino.getValorTecla()==6){
+                                    //Obtener la fila seleccionada y verificar que el indice seleccionado se encuentre entre los valores de la tabla  
+            filaSelec = accesoControles.getTabla().getSelectedRow() + 1;
+            if (filaSelec < accesoControles.getDtm().getRowCount()) {
+
+                //Cambiar de fila seleccionada al presionar el botón
+                accesoControles.getTabla().getSelectionModel().setSelectionInterval(filaSelec, filaSelec);
+                //Enviar la información de la fila selccionada al componente
+                accesoControles.getTxtMensajeHistorial().setText(String.valueOf(accesoControles.getDtm().getValueAt(filaSelec, 0)));
+
+                //Obtener la información de los campos Fecha y Hora de la tabla
+                fechaLeida = String.valueOf(accesoControles.getDtm().getValueAt(filaSelec, 1));
+                HoraLeida = String.valueOf(accesoControles.getDtm().getValueAt(filaSelec, 2));
+                
+                controladorArduino2.enviarMensaje("7");//para indicar que es un mensaje
+                controladorArduino2.enviarMensaje(accesoControles.getTxtMensajeHistorial().getText());
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ControladorMensajes.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                controladorArduino2.enviarMensaje("8");//para indicar que es un mensaje
+                String fechaCompleta = fechaLeida + "  " + HoraLeida;
+                controladorArduino2.enviarMensaje(fechaCompleta); 
+                    }
+            controladorArduino.setValorTecla(0);
+                } 
+                    else if(controladorArduino.getValorTecla()==4){
+                        //Obtener la fila seleccionada y verificar que el indice seleccionado se encuentre entre los valores de la tabla  
+            filaSelec = accesoControles.getTabla().getSelectedRow();
+            if (filaSelec > 0) {
+                //Se decrementa el valor del indice de tabla seleccionada para navegar al mensaje anterior
+                filaSelec--;
+                //Cambiar de fila seleccionada al presionar el botón
+                accesoControles.getTabla().getSelectionModel().setSelectionInterval(filaSelec, filaSelec);
+                //Enviar la información de la fila selccionada al componente
+                accesoControles.getTxtMensajeHistorial().setText(String.valueOf(accesoControles.getDtm().getValueAt(filaSelec, 0)));
+
+                //Obtener la información de los campos Fecha y Hora de la tabla
+                fechaLeida = String.valueOf(accesoControles.getDtm().getValueAt(filaSelec, 1));
+                HoraLeida = String.valueOf(accesoControles.getDtm().getValueAt(filaSelec, 2));
+
+                controladorArduino2.enviarMensaje("7");//para indicar que es un mensaje
+                controladorArduino2.enviarMensaje(accesoControles.getTxtMensajeHistorial().getText());
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ControladorMensajes.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                controladorArduino2.enviarMensaje("8");//para indicar que es un mensaje
+                String fechaCompleta = fechaLeida + "  " + HoraLeida;
+                controladorArduino2.enviarMensaje(fechaCompleta);
+            }
+            controladorArduino.setValorTecla(0);
+                    }
+            }
+           
+            
+       }
+    }
+    
     //Al abrir una ventana de tipo JInternalFrame se dota para estar a la escucha y realizar eventos establecidos.
     public void internalFrameOpened(InternalFrameEvent e) {
-        
+
         //Agregación de Listeners a los componentes de la vista a la que se hace referencia 
         accesoControles.getBtnGuardar().addActionListener(this);
         accesoControles.getBtnMostrar().addActionListener(this);
@@ -81,7 +161,7 @@ public class ControladorMensajes extends InternalFrameAdapter implements ActionL
                 //Mientras exista texto en el archivo sigue leyendo
                 while ((aux = lee.readLine()) != null) {
                     if (parametroObjeto == 0) {
-                        
+
                         //Creación de un objeto de la clase Mensaje para cada linea leida 
                         m = new Mensaje();
                         m.setMensaje(aux);
@@ -117,7 +197,7 @@ public class ControladorMensajes extends InternalFrameAdapter implements ActionL
             //Verificacion de disponibilidad del archivo
             if (archivo != null) {
                 FileWriter save = new FileWriter(archivo);
-                
+
                 //Recorrer el arrayList de tipo mensajes donde se almacenó cada objeto de la clase Mensaje por cada linea que se lea de la tabla
                 for (int i = 0; i < mensajes.size(); i++) {
 
@@ -145,13 +225,12 @@ public class ControladorMensajes extends InternalFrameAdapter implements ActionL
         }
     }
 
-
     //Método para el llenado de la tabla a partir de mensajes encontrados del el archivo txt
     public void actualizarTabla() {
         try {
-           
+
             accesoControles.getDtm().setRowCount(0);
-            
+
             //Se recorre el arraylist que contiene todos los mensajes almacenados
             for (int i = 0; i < mensajes.size(); i++) {
 
@@ -176,7 +255,7 @@ public class ControladorMensajes extends InternalFrameAdapter implements ActionL
     //Sobrecarga de metodos de la interfaz de escucha ActionListener
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
         //Acción a realizar si se presiona el boton guardar 
         if (e.getSource() == accesoControles.getBtnGuardar()) {
             //variables internas para almacenar la fecha,hora y el mensaje
@@ -187,7 +266,7 @@ public class ControladorMensajes extends InternalFrameAdapter implements ActionL
             hora = getHora();
             //Se crea un nuevo objeto de clase Mensaje
             Mensaje m = new Mensaje(mensaje, fecha, hora);
-            
+
             //Se agrega el objeto al arrayList que almacena los objetos de tipo Mensaje
             mensajes.add(m);
             //Se escribe en el archivo los nuevos valores 
@@ -196,50 +275,11 @@ public class ControladorMensajes extends InternalFrameAdapter implements ActionL
             actualizarTabla();
 
             //Se envia la instrucción a arduino a ejecutar 
-            controladorArduino2.enviarMensaje("1");
+            //controladorArduino2.enviarMensaje("8");
             //Se envia el mensaje a mostrar en el LCD
-            controladorArduino2.enviarMensaje(accesoControles.getTxtMensajeNuevo().getText());
-            
-        //Acción a realizar si se presiona el boton mostrar 
-        } else if (e.getSource() == accesoControles.getBtnMostrar()) {
-             //Se envia la instrucción a arduino a ejecutar 
-            controladorArduino2.enviarMensaje("1");
-            //Se envia el mensaje a mostrar en el LCD
-            controladorArduino2.enviarMensaje(accesoControles.getTxtMensajeHistorial().getText());
-            String fechaCompleta = fechaLeida + "      " + HoraLeida;
-             //Se envia la hora en la cual se introdujo el mensaje en la interfaz
-            controladorArduino2.enviarMensaje("      " + fechaCompleta);
-
-        //Acción a realizar si se presiona el boton siguiente
-        } else if (e.getSource() == accesoControles.getBtnSiguiente()) {
-
-            //Obtener la fila seleccionada y verificar que el indice seleccionado se encuentre entre los valores de la tabla  
-            filaSelec = accesoControles.getTabla().getSelectedRow() + 1;
-            if (filaSelec < accesoControles.getDtm().getRowCount()) {
-                
-                //Cambiar de fila seleccionada al presionar el botón
-                accesoControles.getTabla().getSelectionModel().setSelectionInterval(filaSelec, filaSelec);
-                //Enviar la información de la fila selccionada al componente
-                accesoControles.getTxtMensajeHistorial().setText(String.valueOf(accesoControles.getDtm().getValueAt(filaSelec, 0)));
-            }
-
-            //Acción a realizar si se presiona el boton anterior
-        } else if (e.getSource() == accesoControles.getBtnAnterior()) {
-            
-            //Obtener la fila seleccionada y verificar que el indice seleccionado se encuentre entre los valores de la tabla  
-            filaSelec = accesoControles.getTabla().getSelectedRow();
-            if (filaSelec > 0) {
-                //Se decrementa el valor del indice de tabla seleccionada para navegar al mensaje anterior
-                filaSelec--;
-                 //Cambiar de fila seleccionada al presionar el botón
-                accesoControles.getTabla().getSelectionModel().setSelectionInterval(filaSelec, filaSelec);
-                    //Enviar la información de la fila selccionada al componente
-                accesoControles.getTxtMensajeHistorial().setText(String.valueOf(accesoControles.getDtm().getValueAt(filaSelec, 0)));
-
-            }
-            //controladorArduino2.enviarMensaje("7");
             //controladorArduino2.enviarMensaje(accesoControles.getTxtMensajeNuevo().getText());
-        }else if(e.getSource() == accesoControles.getBtnMostrar()){
+            //Acción a realizar si se presiona el boton mostrar 
+        } else if (e.getSource() == accesoControles.getBtnMostrar()) {
             controladorArduino2.enviarMensaje("7");//para indicar que es un mensaje
             controladorArduino2.enviarMensaje(accesoControles.getTxtMensajeHistorial().getText());
             try {
@@ -247,11 +287,80 @@ public class ControladorMensajes extends InternalFrameAdapter implements ActionL
             } catch (InterruptedException ex) {
                 Logger.getLogger(ControladorMensajes.class.getName()).log(Level.SEVERE, null, ex);
             }
-             controladorArduino2.enviarMensaje("8");//para indicar que es un mensaje
-            String fechaCompleta=fechaLeida+"  "+HoraLeida;
+            controladorArduino2.enviarMensaje("8");//para indicar que es un mensaje
+            String fechaCompleta = fechaLeida + "  " + HoraLeida;
             controladorArduino2.enviarMensaje(fechaCompleta);
-            
-        }else if(e.getSource() == accesoControles.getBtnEliminar()){
+            //Acción a realizar si se presiona el boton siguiente
+        } else if (e.getSource() == accesoControles.getBtnSiguiente()) {
+
+            //Obtener la fila seleccionada y verificar que el indice seleccionado se encuentre entre los valores de la tabla  
+            filaSelec = accesoControles.getTabla().getSelectedRow() + 1;
+            if (filaSelec < accesoControles.getDtm().getRowCount()) {
+
+                //Cambiar de fila seleccionada al presionar el botón
+                accesoControles.getTabla().getSelectionModel().setSelectionInterval(filaSelec, filaSelec);
+                //Enviar la información de la fila selccionada al componente
+                accesoControles.getTxtMensajeHistorial().setText(String.valueOf(accesoControles.getDtm().getValueAt(filaSelec, 0)));
+
+                //Obtener la información de los campos Fecha y Hora de la tabla
+                fechaLeida = String.valueOf(accesoControles.getDtm().getValueAt(filaSelec, 1));
+                HoraLeida = String.valueOf(accesoControles.getDtm().getValueAt(filaSelec, 2));
+                
+                controladorArduino2.enviarMensaje("7");//para indicar que es un mensaje
+                controladorArduino2.enviarMensaje(accesoControles.getTxtMensajeHistorial().getText());
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ControladorMensajes.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                controladorArduino2.enviarMensaje("8");//para indicar que es un mensaje
+                String fechaCompleta = fechaLeida + "  " + HoraLeida;
+                controladorArduino2.enviarMensaje(fechaCompleta);
+            }
+
+            //Acción a realizar si se presiona el boton anterior
+        } else if (e.getSource() == accesoControles.getBtnAnterior()) {
+
+            //Obtener la fila seleccionada y verificar que el indice seleccionado se encuentre entre los valores de la tabla  
+            filaSelec = accesoControles.getTabla().getSelectedRow();
+            if (filaSelec > 0) {
+                //Se decrementa el valor del indice de tabla seleccionada para navegar al mensaje anterior
+                filaSelec--;
+                //Cambiar de fila seleccionada al presionar el botón
+                accesoControles.getTabla().getSelectionModel().setSelectionInterval(filaSelec, filaSelec);
+                //Enviar la información de la fila selccionada al componente
+                accesoControles.getTxtMensajeHistorial().setText(String.valueOf(accesoControles.getDtm().getValueAt(filaSelec, 0)));
+
+                //Obtener la información de los campos Fecha y Hora de la tabla
+                fechaLeida = String.valueOf(accesoControles.getDtm().getValueAt(filaSelec, 1));
+                HoraLeida = String.valueOf(accesoControles.getDtm().getValueAt(filaSelec, 2));
+
+                controladorArduino2.enviarMensaje("7");//para indicar que es un mensaje
+                controladorArduino2.enviarMensaje(accesoControles.getTxtMensajeHistorial().getText());
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ControladorMensajes.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                controladorArduino2.enviarMensaje("8");//para indicar que es un mensaje
+                String fechaCompleta = fechaLeida + "  " + HoraLeida;
+                controladorArduino2.enviarMensaje(fechaCompleta);
+            }
+            //controladorArduino2.enviarMensaje("7");
+            //controladorArduino2.enviarMensaje(accesoControles.getTxtMensajeNuevo().getText());
+        } else if (e.getSource() == accesoControles.getBtnMostrar()) {
+            controladorArduino2.enviarMensaje("7");//para indicar que es un mensaje
+            controladorArduino2.enviarMensaje(accesoControles.getTxtMensajeHistorial().getText());
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ControladorMensajes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            controladorArduino2.enviarMensaje("8");//para indicar que es un mensaje
+            String fechaCompleta = fechaLeida + "  " + HoraLeida;
+            controladorArduino2.enviarMensaje(fechaCompleta);
+
+        } else if (e.getSource() == accesoControles.getBtnEliminar()) {
             eliminarDeTabla();
             escribirArchivo();
             actualizarTabla();
@@ -284,7 +393,7 @@ public class ControladorMensajes extends InternalFrameAdapter implements ActionL
             filaSelec = accesoControles.getTabla().getSelectedRow();
             //Enviar la información de la columna mensaje de la fila selccionada al componente
             accesoControles.getTxtMensajeHistorial().setText(String.valueOf(accesoControles.getDtm().getValueAt(filaSelec, 0)));
-            
+
             //Obtener la información de los campos Fecha y Hora de la tabla
             fechaLeida = String.valueOf(accesoControles.getDtm().getValueAt(filaSelec, 1));
             HoraLeida = String.valueOf(accesoControles.getDtm().getValueAt(filaSelec, 2));
@@ -310,10 +419,9 @@ public class ControladorMensajes extends InternalFrameAdapter implements ActionL
     public void mouseExited(MouseEvent e) {
 
     }
-    
-    
-    void eliminarDeTabla(){
-        if(filaSelec>0){
+
+    void eliminarDeTabla() {
+        if (filaSelec > 0) {
             mensajes.remove(filaSelec);
         }
     }

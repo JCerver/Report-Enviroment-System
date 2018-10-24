@@ -38,19 +38,12 @@ public class ControladorEstadoTiempo extends InternalFrameAdapter implements Act
         //Dependiendo del boton seleccionado envia una instrucción a arduino y en base al valor enviado
         //enviará al LCD el estado del sensor seleccionado 
         if (e.getSource() == accesoControles.getBtnHumedad()) {
-            controladorArduino.enviarMensaje("2");
-        } else if (e.getSource() == accesoControles.getBtnTemperatura()) {
-            controladorArduino.enviarMensaje("3");
-        } else if (e.getSource() == accesoControles.getBtnLuminosidad()) {
-            controladorArduino.enviarMensaje("4");
             controladorArduino.enviarMensaje("22");
-            System.out.println("Fui presionado y soy humedad");
         } else if (e.getSource() == accesoControles.getBtnTemperatura()) {
             controladorArduino.enviarMensaje("33");
-            System.out.println("Fui presionado y soy temperatura");
         } else if (e.getSource() == accesoControles.getBtnLuminosidad()) {
-            System.out.println("Fui presionado y soy luminosidad");
-                controladorArduino.enviarMensaje("44");
+            //controladorArduino.enviarMensaje("4");
+            controladorArduino.enviarMensaje("44");
         } else if (e.getSource() == accesoControles.getBtnDesplazar()) {
 
         } else if (e.getSource() == accesoControles.getBtnPausar()) {

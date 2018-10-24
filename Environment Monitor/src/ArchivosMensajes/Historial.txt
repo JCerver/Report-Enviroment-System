@@ -1,13 +1,4 @@
-Hola
-22/10/2018
-11:00 p.m.
-Highway to hell es una rola de AC/DC en el año de 1975
-30/10/2018
-10:34 p.m.
-Stairway to heaven
-25/10/2018
-1:19 p.m.
-EStoy escribiendo una prueba de mensaje
+Estoy escribiendo una prueba de mensaje
 22/10/2018
 12:58:08
 Probando la nueva funcionalidad
@@ -22,9 +13,6 @@ Lo que sea
 Ingenieria en Sistemas
 22/10/2018
 19:42:08
-fgfdgfgdfgdfgdfgdfgfdgdfgghjgjghjghjghjghjgjghjghjgh
-24/10/2018
-11:49:48
 Highway to hell es una rola de AC/DC en el 
 24/10/2018
 11:54:05

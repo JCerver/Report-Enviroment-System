@@ -13,8 +13,12 @@ import jssc.SerialPortException;
 public class ControladorArduino {
 
     String valor = "";
+    private boolean quiereMensaje = false;
+    int valorTecla;
 
     PanamaHitek_Arduino Arduino = new PanamaHitek_Arduino();
+    
+    
     jssc.SerialPortEventListener eventoArduino = new jssc.SerialPortEventListener() {
         @Override
         public void serialEvent(jssc.SerialPortEvent spe) {
@@ -27,30 +31,18 @@ public class ControladorArduino {
                     System.out.println(valor);
 
                     switch (valor) {
-
-                       
-                       
-                        case "D":
-                            System.out.println(valor);
-                            enviarMensaje("1");
-                            enviarMensaje("1MENSAJES ");
-                            break;
-
-                        case "2":
-                            System.out.println(valor);
-                            enviarMensaje("1MENSAJE ANTERIOR: ");
-                            break;
                         case "4":
-
-                            break;
-                        case "8":
-                            System.out.println(valor);
-                            enviarMensaje("1MENSAJE SIGUIENTE: ");
-                            /*
-                            controladorArduino2.enviarMensaje("1");//para indicar que es un mensaje
-                             */
+                            valorTecla=4;
+                            
+     
+                            
+                            
                             break;
                         case "6":
+                            valorTecla=6;
+
+                            break;
+                        case "":
 
                             break;
                     }
@@ -67,7 +59,7 @@ public class ControladorArduino {
     public ControladorArduino() {
 
         try {
-            Arduino.arduinoRXTX("/dev/ttyACM1", 9600, eventoArduino);
+            Arduino.arduinoRXTX("/dev/ttyACM0", 9600, eventoArduino);
             //Arduino.arduinoTX("/dev/ttyACM0", 9600);
         } catch (ArduinoException ex) {
             Logger.getLogger(ControladorArduino.class.getName()).log(Level.SEVERE, null, ex);
@@ -104,5 +96,14 @@ public class ControladorArduino {
     public void setValor(String valor) {
         this.valor = valor;
     }
+
+    public int getValorTecla() {
+        return valorTecla;
+    }
+
+    public void setValorTecla(int valorTecla) {
+        this.valorTecla = valorTecla;
+    }
+    
 
 }

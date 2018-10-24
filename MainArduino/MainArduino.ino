@@ -240,14 +240,17 @@ void mostrarTemperatura() {
 
   while (opcion == '3') {
     loopSensorTemperatura();
-    loopSensorHumedad();
+    //loopSensorHumedad();
     lcd.clear();
     lcd.home();
     String mensaje = "La temperatura es  " ;
     lcd.print(mensaje);
-    lcd.print(valorTemperaturaCentrigrados);
+    //lcd.print(valorTemperaturaCentrigrados);
+    lcd.print(temperatura);
+    
     lcd.print(" *C");
     delay(100);
+    
     if (Serial.read() != 10) {
       break;
     }

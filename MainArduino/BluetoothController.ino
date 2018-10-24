@@ -66,7 +66,7 @@ void enviarFechaBluetooth(){
     
 
 void enviaClimaAndroid(){
-  String cadena = (String)valorTemperaturaCentrigrados + ',' + valorHumedad + ',' + ilum + '#';
+  String cadena = (String)temperatura + ',' + valorHumedad + ',' + ilum + '#';
   BT1.print(cadena);  
   Serial.print(cadena);
   opcionBluetooth = 0;
