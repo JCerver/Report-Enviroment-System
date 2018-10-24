@@ -3,7 +3,6 @@
 
 void setupDisplay() {
   lcd.begin(20, 4);                         //método para iniciar el display (Recibe: anchura y altura de caracteres))
-  Serial.begin(9600);
   Serial.setTimeout(50);
   lcd.write("Welcome");
   //analogWrite(BRILLO, 200);

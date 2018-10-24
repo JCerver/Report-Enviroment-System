@@ -6,7 +6,6 @@ void setupBluetooth() {
 
 void loopBluetooth() {
 
-
     if (BT1.available()){
       int num = BT1.read();
       analogWrite(BRILLO, num);

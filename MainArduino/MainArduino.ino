@@ -1,6 +1,8 @@
 
 #include <SoftwareSerial.h>
 #include <LiquidCrystal.h>                //anadir la libreria para gestionar un display LCD
+#include <Keypad.h>
+
 /************************************************
   Programa: Sistema de simulación de alarma de seguridad
 
@@ -107,6 +109,22 @@ float temperatura = 0;                                  //variable que guardará
 #define PIN_C3 20                                      //pin de columna 3 teclado matricial
 #define PIN_C4 21                                      //pin de columna 4 teclado matricial
 
+
+const byte rowsCount = 4;
+const byte columsCount = 4;
+
+char keys[rowsCount][columsCount] = {
+  { '1', '2', '3', 'A' },
+  { '4', '5', '6', 'B' },
+  { '7', '8', '9', 'C' },
+  { '*', '0', '#', 'D' }
+};
+
+const byte rowPins[rowsCount] = { PIN_F1,PIN_F2,PIN_F3,PIN_F4 };
+const byte columnPins[columsCount] = { PIN_C1,PIN_C2,PIN_C3,PIN_C4 };
+
+Keypad keypad = Keypad(makeKeymap(keys), rowPins, columnPins, rowsCount, columsCount);
+
 /****************               VARIABLES         *******************/
 char tecla = 0;                                       //variable para almacenar la tecla oprimida
 
@@ -121,12 +139,8 @@ long timeCounter = 0;
 boolean tecladoOprimido = false;
 
 void setup() {
-
-
-  //setupTecladoMatricial();
-  //setupDisplay();
-
-
+  Serial.begin(9600);                                               // Inicializamos comunicación serie
+  
   setupTecladoMatricial();
   setupDisplay();
 
@@ -140,9 +154,6 @@ void loop() {
 
   loopTecladoMatricial();
 
-
-
-
   verificarOpcion();
 
   if (opcion == '2') {
@@ -154,11 +165,6 @@ void loop() {
   }
 
   loopBluetooth();
-
-
-
-
-
 }
 
 void verificarOpcion() {
@@ -166,7 +172,7 @@ void verificarOpcion() {
     //delay(100);
     opcion = Serial.read();
     isMedicionClimatica = false;
-    lcd.clear();
+    //lcd.clear();
 
     if (Serial.available() > 0) {
       if (opcion == '2' || opcion == '3' || opcion == '4') {
