@@ -1,6 +1,5 @@
 
 void setupSensorHumedad() {
-  Serial.begin(9600);                                               // Inicializamos comunicación serie
   dht.begin();                                                      // Comenzamos el sensor DHT
 }
 

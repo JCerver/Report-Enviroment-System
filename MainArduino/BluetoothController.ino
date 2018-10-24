@@ -20,6 +20,7 @@ void loopBluetooth() {
   }
 }
 
+
 void cambiarBrillo(){
   if (BT1.available()){
     String num = BT1.readString();
@@ -41,12 +42,25 @@ void enviarMensajeBluetooth(){
   if(BT1.available()){
     String cadena = BT1.readString();
     lcd.clear();
-    lcd.print(cadena);
+    String linea1=cadena.substring(0,20);
+      String linea2=cadena.substring(21,40);
+      String linea3=cadena.substring(42,60);
+      String linea4=cadena.substring(61,80);
+    lcd.setCursor(0,0),
+      lcd.print(linea1);
+      lcd.setCursor(0,1),
+      lcd.print(linea2);
+      lcd.setCursor(0,2),
+      lcd.print(linea3); 
+      lcd.setCursor(0,3),
+      lcd.print(linea4);
     
   }
   opcionBluetooth = 0;
   opcion = 1;
 }
+
+    
 
 void enviaClimaAndroid(){
   String cadena = (String)valorTemperaturaCentrigrados + ',' + valorHumedad + ',' + ilum + '#';

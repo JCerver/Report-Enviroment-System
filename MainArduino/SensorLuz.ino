@@ -1,7 +1,6 @@
                                                                //variable para almacenar la iluminación calculada
 
 void setupSensorLuz() {
-  Serial.begin(9600);
 }
 
 void loopSensorLuz() {
