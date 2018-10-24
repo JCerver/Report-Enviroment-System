@@ -27,25 +27,9 @@ public class ControladorArduino {
                     System.out.println(valor);
 
                     switch (valor) {
-                        case "A":
-                            System.out.println("Se presiono A");
-                            enviarMensaje("1");
-                            enviarMensaje("lA TEMPERATURA ES: ");
-                            enviarMensaje("2");
-                            break;
-                        case "B":
-                            System.out.println(valor);
-                            enviarMensaje("1");
-                            enviarMensaje("lA HUMEDAD ES: ");
-                            enviarMensaje("3");
-                            break;
-                        case "C":
-                            System.out.println(valor);
-                            enviarMensaje("1");
-                            enviarMensaje("lA LUMINOSIDAD ES: ");
-                            enviarMensaje("4");
 
-                            break;
+                       
+                       
                         case "D":
                             System.out.println(valor);
                             enviarMensaje("1");

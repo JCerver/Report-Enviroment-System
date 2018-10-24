@@ -1,75 +1,113 @@
-//#include <LiquidCrystal.h>                //anadir la libreria para gestionar un display LCD
 
-/****************               CONSTANTES                     *******************/
-<<<<<<< HEAD
 
-/*
-=======
-<<<<<<< HEAD
-/*#define RS 11                               //pin de conexión a punto RS del LCD display
-#define E  10                               //pin de conexión a punto E del LCD display
-#define D4 9                                //pin de conexión a punto D4 del LCD display
-#define D5 6                                //pin de conexión a punto D5 del LCD display
-#define D6 5                                //pin de conexión a punto R6 del LCD display
-#define D7 3                                //pin de conexión a punto R7 del LCD display
-=======
->>>>>>> 66b10f6d9cc72ddacc6adcfdb39e1091a571368b
-#define RS 7                               //pin de conexión a punto RS del LCD display
-#define E  6                               //pin de conexión a punto E del LCD display
-#define D4 5                                //pin de conexión a punto D4 del LCD display
-#define D5 4                                //pin de conexión a punto D5 del LCD display
-#define D6 3                                //pin de conexión a punto R6 del LCD display
-#define D7 2                                //pin de conexión a punto R7 del LCD display
-<<<<<<< HEAD
-*/
-/****************         Construcor para gestionar el LCD Diaplay       *******************/
-//LiquidCrystal lcd(RS, E, D4, D5, D6, D7);
-=======
->>>>>>> dd2d0fa5ca82aae91dbfdaf1da741ae651caa1ce
-
-/****************         Construcor para gestionar el LCD Diaplay       *******************/
-/*LiquidCrystal lcd(RS, E, D4, D5, D6, D7);*/
->>>>>>> 66b10f6d9cc72ddacc6adcfdb39e1091a571368b
 
 void setupDisplay() {
   lcd.begin(20, 4);                         //método para iniciar el display (Recibe: anchura y altura de caracteres))
-  Serial.begin(9600);
   Serial.setTimeout(50);
   lcd.write("Welcome");
-  analogWrite(BRILLO, 200);
+  analogWrite(PIN_BRILLO, 50);
+  analogWrite(PIN_CONTRASTE, 50);
 }
 
+
 void loopDisplay() {
-  
-  if(Serial.available())  {
-    delay(100);
-    lcd.clear();                            //borrar el contenido del display y colocar cursor al incio
-    while(Serial.available() > 0){          //Si se envió alguna entrada desde el monitor serial
-      String text=Serial.readString();
-      String linea1=text.substring(0,20);
-      String linea2=text.substring(21,40);
-      String linea3=text.substring(42,60);
-      String linea4=text.substring(61,80);
+  if (Serial.available()) {        //Si se envió alguna entrada desde el monitor serial
+
+    mensaje = Serial.readString();
+  }
 
 
-      //String fecha=Serial.readString();
+}
 
-      
-      
-      //lcd.write(Serial.read());             //muestra en el display lo que se leyo del monitor serial
-      lcd.setCursor(0,0),
-      lcd.print(linea1);
-      lcd.setCursor(0,1),
-      lcd.print(linea2);
-      lcd.setCursor(0,2),
-      lcd.print(linea3); 
-      lcd.setCursor(0,3),
-      lcd.print(linea4);
+void showDisplay() {
 
 
-      
-      
-    }
+
+
+
+  lcd.clear();
+  String linea1 = mensaje.substring(0, 20);
+  String linea2 = mensaje.substring(21, 40);
+  String linea3 = mensaje.substring(41, 60);
+  String linea4 = mensaje.substring(61, 80);
+  String linea5 = mensaje.substring(81, 100);
+  String linea6 = mensaje.substring(101, 120);
+  String linea7 = mensaje.substring(121, 140);
+  String linea8 = mensaje.substring(141, 160);
+
+
+
+
+  //String fecha=Serial.readString();
+
+
+  if (lineaActual == 0) {
+    lcd.setCursor(0, 0);
+    lcd.print(linea1);
+    lcd.setCursor(0, 1);
+    lcd.print(linea2);
+    lcd.setCursor(0, 2);
+    lcd.print(linea3);
+  } else if (lineaActual == 1) {
+    lcd.setCursor(0, 0);
+    lcd.print(linea2);
+    lcd.setCursor(0, 1);
+    lcd.print(linea3);
+    lcd.setCursor(0, 2);
+    lcd.print(linea4);
+  } else if (lineaActual == 2) {
+    lcd.setCursor(0, 0);
+    lcd.print(linea3);
+    lcd.setCursor(0, 1);
+    lcd.print(linea4);
+    lcd.setCursor(0, 2);
+    lcd.print(linea5);
+  } else if (lineaActual == 3) {
+    lcd.setCursor(0, 0);
+    lcd.print(linea4);
+    lcd.setCursor(0, 1);
+    lcd.print(linea5);
+    lcd.setCursor(0, 2);
+    lcd.print(linea6);
+  } else if (lineaActual == 4) {
+    lcd.setCursor(0, 0);
+    lcd.print(linea5);
+    lcd.setCursor(0, 1);
+    lcd.print(linea6);
+    lcd.setCursor(0, 2);
+    lcd.print(linea7);
+  } else if (lineaActual == 5) {
+    lcd.setCursor(0, 0);
+    lcd.print(linea6);
+    lcd.setCursor(0, 1);
+    lcd.print(linea7);
+    lcd.setCursor(0, 2);
+    lcd.print(linea8);
+  }
+
+
+  lcd.setCursor(0, 3);
+  lcd.print(fecha);
+
+}
+
+
+
+void loopDisplay2() {
+
+
+
+  if (Serial.available()) {        //Si se envió alguna entrada desde el monitor serial
+
+    fecha = Serial.readString();
+
+    //delay(100);
+
+
+
+
+
+
   }
 
 }

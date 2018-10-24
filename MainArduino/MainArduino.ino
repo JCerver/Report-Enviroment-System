@@ -1,22 +1,10 @@
+
 #include <SoftwareSerial.h>
-
-SoftwareSerial BT1(12,13); // RX | TX
-
-
-
-
 #include <LiquidCrystal.h>                //anadir la libreria para gestionar un display LCD
+#include <Keypad.h>
 
-/****************               CONSTANTES                     *******************/
-#define RS 11                               //pin de conexión a punto RS del LCD display
-#define E  10                               //pin de conexión a punto E del LCD display
-#define D4 9                                //pin de conexión a punto D4 del LCD display
-#define D5 6                                //pin de conexión a punto D5 del LCD display
-#define D6 5                                //pin de conexión a punto R6 del LCD display
-#define D7 3                                //pin de conexión a punto R7 del LCD display
 
-/****************         Construcor para gestionar el LCD Diaplay       *******************/
-LiquidCrystal lcd(RS, E, D4, D5, D6, D7);
+
 /************************************************
   Programa: Sistema de simulación de alarma de seguridad
 
@@ -28,12 +16,18 @@ LiquidCrystal lcd(RS, E, D4, D5, D6, D7);
   Descripción del programa:
 
 
- ***********************************************/
+ **********************************************/
 
 
 
- /*-----------------------------------------------------------           PARA USO DEL DISPLAY               */
-#include <LiquidCrystal.h>                //anadir la libreria para gestionar un display LCD
+/*-----------------------------------------------------------           PARA USO DEL DISPLAY               */
+
+
+
+
+
+//Serial para el módulo Bluetooth
+SoftwareSerial BT1(12, 13); // RX | TX
 
 /****************               CONSTANTES                     *******************/
 #define RS 7                               //pin de conexión a punto RS del LCD display
@@ -42,18 +36,20 @@ LiquidCrystal lcd(RS, E, D4, D5, D6, D7);
 #define D5 4                                //pin de conexión a punto D5 del LCD display
 #define D6 3                                //pin de conexión a punto R6 del LCD display
 #define D7 2                                //pin de conexión a punto R7 del LCD display
-#define BRILLO 9
+
+#define PIN_BRILLO 9                        //pin analógico para brillo de LCD
+#define PIN_CONTRASTE 8                       //pin analógico para contarste de LCD
 
 /****************         Construcor para gestionar el LCD Diaplay       *******************/
 LiquidCrystal lcd(RS, E, D4, D5, D6, D7);
 
+String mensaje="";
+String fecha="";
+int lineaActual = 0;
 
 
 
-
-
-
- /*-----------------------------------------------------------           PARA USO DEL SERSOR DE HUMEDAD               */
+/*-----------------------------------------------------------           PARA USO DEL SERSOR DE HUMEDAD               */
 #include <DHT.h>                                                    //anadir la libreria para gestionar un display LCD
 
 /****************               CONSTANTES                     *******************/
@@ -73,7 +69,7 @@ DHT dht(DHTPIN, DHTTYPE);
 
 
 
- /*-----------------------------------------------------------           PARA USO DEL SERSOR DE LUMINOSIDAD               */
+/*-----------------------------------------------------------           PARA USO DEL SERSOR DE LUMINOSIDAD               */
 /****************               CONSTANTES                     *******************/
 const long A = 5000;                                                        //Resistencia en oscuridad en KΩ
 const int B = 15;                                                           //Resistencia a la luz (10 Lux) en KΩ
@@ -87,7 +83,7 @@ int ilum;
 
 
 
- /*-----------------------------------------------------------           PARA USO DEL SERSOR DE TEMPERATURA               */
+/*-----------------------------------------------------------           PARA USO DEL SERSOR DE TEMPERATURA               */
 
 /****************               CONSTANTES                     *******************/
 #define SENSOR_TEMPERATURA 1                            //pin de entrada analogica donde esta conectado el sensor de humedad
@@ -102,7 +98,7 @@ float temperatura = 0;                                  //variable que guardará
 
 
 
- /*-----------------------------------------------------------           PARA USO DEL TECLADO MATRICIAL               */
+/*-----------------------------------------------------------           PARA USO DEL TECLADO MATRICIAL               */
 
 /****************               CONSTANTES                     *******************/
 //Salidas digitales
@@ -117,6 +113,22 @@ float temperatura = 0;                                  //variable que guardará
 #define PIN_C3 20                                      //pin de columna 3 teclado matricial
 #define PIN_C4 21                                      //pin de columna 4 teclado matricial
 
+
+const byte rowsCount = 4;
+const byte columsCount = 4;
+
+char keys[rowsCount][columsCount] = {
+  { '1', '2', '3', 'A' },
+  { '4', '5', '6', 'B' },
+  { '7', '8', '9', 'C' },
+  { '*', '0', '#', 'D' }
+};
+
+const byte rowPins[rowsCount] = { PIN_F1,PIN_F2,PIN_F3,PIN_F4 };
+const byte columnPins[columsCount] = { PIN_C1,PIN_C2,PIN_C3,PIN_C4 };
+
+Keypad keypad = Keypad(makeKeymap(keys), rowPins, columnPins, rowsCount, columsCount);
+
 /****************               VARIABLES         *******************/
 char tecla = 0;                                       //variable para almacenar la tecla oprimida
 
@@ -125,53 +137,63 @@ char tecla = 0;                                       //variable para almacenar 
 
 boolean isMedicionClimatica;
 int opcion;
+int opcionBluetooth = 0;
 
 const int timeThreshold = 150;
 long timeCounter = 0;
-boolean tecladoOprimido=false;
+boolean tecladoOprimido = false;
 
 void setup() {
-
+  Serial.begin(9600);                                               // Inicializamos comunicación serie
+  
   setupTecladoMatricial();
   setupDisplay();
-<<<<<<< HEAD
+
   setupSensorLuz();
   setupSensorTemperatura();
   setupSensorHumedad();
+  setupBluetooth();
+  
 }
 
 void loop() {
 
-    loopTecladoMatricial();
- 
   
-
+  loopBluetooth();
+  loopTecladoMatricial();
 
   verificarOpcion();
-  
+
   if (opcion == '2') {
     mostrarHumedad();
   } else if (opcion == '3') {
     mostrarTemperatura();
   } else if (opcion == '4') {
     mostrarLuminosidad();
+  } 
+
+  if (opcionBluetooth == 1){
+    enviarMensajeBluetooth();
+  } else if(opcionBluetooth == 2){
+    cambiarBrillo();    
+  } else if(opcionBluetooth == 3){
+    cambiarContraste();
+  } else if(opcionBluetooth == 4){
+    enviaClimaAndroid();
+  }else if(opcionBluetooth == 5){
+    enviarFechaBluetooth();
   }
-
-
-  
-
-  
 
 
 }
 
-void verificarOpcion(){
+void verificarOpcion() {
   if (Serial.available()) {
     //delay(100);
     opcion = Serial.read();
     isMedicionClimatica = false;
-    lcd.clear();
-    
+    //lcd.clear();
+
     if (Serial.available() > 0) {
       if (opcion == '2' || opcion == '3' || opcion == '4') {
         isMedicionClimatica = true;
@@ -179,19 +201,19 @@ void verificarOpcion(){
     }
 
     if (!isMedicionClimatica) {
-      lcd.setCursor(0, 0);
-      lcd.clear();
-      while (Serial.available() > 0) {
-        //lcd.autoscroll();
-        lcd.write(Serial.read());
-        delay(100);
-
+      if (opcion == '7') {
+        lineaActual=0;
+        loopDisplay();
+      }else if(opcion == '8') {
+        loopDisplay2();
       }
+        showDisplay();
+      
     }
 
-  }    
+  }
 }
-  
+
 void mostrarHumedad() {
   lcd.noAutoscroll();
 
@@ -253,24 +275,3 @@ void mostrarLuminosidad() {
     }
   }
 }
-
-
-
-
-=======
-  //setupSensorLuz();
-  //setupSensorTemperatura();
-  //setupSensorHumedad();
-  setupBluetooth();
-}
-
-void loop() {
-  String text=Serial.readString();
-  //loopTecladoMatricial();
-  loopDisplay();
-  //loopSensorLuz();
-  //loopSensorTemperatura();
-  //loopSensorHumedad();
-  loopBluetooth();
-}
->>>>>>> 66b10f6d9cc72ddacc6adcfdb39e1091a571368b

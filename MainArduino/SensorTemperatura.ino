@@ -1,6 +1,5 @@
 
 void setupSensorTemperatura(){
-  Serial.begin(9600);
   //analogReadResolution(10);
 }
 
