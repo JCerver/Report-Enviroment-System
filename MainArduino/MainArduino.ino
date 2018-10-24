@@ -32,7 +32,9 @@ SoftwareSerial BT1(12, 13); // RX | TX
 #define D5 4                                //pin de conexión a punto D5 del LCD display
 #define D6 3                                //pin de conexión a punto R6 del LCD display
 #define D7 2                                //pin de conexión a punto R7 del LCD display
-#define BRILLO 9
+
+#define PIN_BRILLO 9                        //pin analógico para brillo de LCD
+#define PIN_CONTRASTE 8                       //pin analógico para contarste de LCD
 
 /****************         Construcor para gestionar el LCD Diaplay       *******************/
 LiquidCrystal lcd(RS, E, D4, D5, D6, D7);
@@ -115,6 +117,7 @@ char tecla = 0;                                       //variable para almacenar 
 
 boolean isMedicionClimatica;
 int opcion;
+int opcionBluetooth = 0;
 
 const int timeThreshold = 150;
 long timeCounter = 0;
@@ -134,14 +137,15 @@ void setup() {
   setupSensorTemperatura();
   setupSensorHumedad();
   setupBluetooth();
+  
 }
 
 void loop() {
 
+  
+  loopBluetooth();
   loopTecladoMatricial();
-
-
-
+  
 
   verificarOpcion();
 
@@ -151,11 +155,19 @@ void loop() {
     mostrarTemperatura();
   } else if (opcion == '4') {
     mostrarLuminosidad();
+  } 
+
+  if (opcionBluetooth == 1){
+    enviarMensajeBluetooth();
+  } else if(opcionBluetooth == 2){
+    cambiarBrillo();    
+  } else if(opcionBluetooth == 3){
+    cambiarContraste();
+  } else if(opcionBluetooth == 4){
+    enviaClimaAndroid();
   }
 
-  loopBluetooth();
-
-
+  
 
 
 

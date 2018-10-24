@@ -92,9 +92,10 @@
         android:layout_width="372dp"
         android:layout_height="74dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="8dp"
-        android:max="255"
+        android:max="254"
+        android:min="0"
         android:progress="@android:integer/config_longAnimTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
@@ -110,17 +111,51 @@
         android:layout_marginEnd="8dp"
         android:text="Brillo LCD"
         android:textAllCaps="true"
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="18sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblLuminosidadReal" />
 
+    <SeekBar
+        android:id="@+id/sbrContraste"
+        android:layout_width="372dp"
+        android:layout_height="74dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="8dp"
+        android:max="170"
+        android:min="0"
+        android:progress="@android:integer/config_longAnimTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblContraste" />
+
+    <TextView
+        android:id="@+id/lblContraste"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
+        android:text="Contraste LCD"
+        android:textAllCaps="true"
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sbrBrillo" />
+
+
     <android.support.design.widget.TextInputLayout
         android:id="@+id/textInputLayout"
         android:layout_width="321dp"
-        android:layout_height="52dp"
+        android:layout_height="124dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="100dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnEnviarMensaje"
@@ -148,4 +183,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sbrBrillo"
         app:layout_constraintVertical_bias="0.505" />
+
+    <Button
+        android:id="@+id/btnActualizar"
+        android:layout_width="64dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="8dp"
+        android:background="@android:drawable/ic_menu_rotate"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

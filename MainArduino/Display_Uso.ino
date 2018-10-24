@@ -6,7 +6,8 @@ void setupDisplay() {
   Serial.begin(9600);
   Serial.setTimeout(50);
   lcd.write("Welcome");
-  //analogWrite(BRILLO, 200);
+  analogWrite(PIN_BRILLO, 50);
+  analogWrite(PIN_CONTRASTE, 50);
 }
 
 void loopDisplay() {

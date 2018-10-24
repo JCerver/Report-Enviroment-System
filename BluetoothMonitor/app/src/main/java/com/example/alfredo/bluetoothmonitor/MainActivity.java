@@ -30,9 +30,9 @@ import java.util.UUID;
 public class MainActivity extends AppCompatActivity {
 
     private TextView lblTemperatura, lblHumedad, lblLuminosidad;
-    private SeekBar sbrBrillo;
+    private SeekBar sbrBrillo, sbrContraste;
     private TextInputEditText txtMensajes;
-    private Button btnEnviarMensaje;
+    private Button btnEnviarMensaje, btnActualizar;
 
     private Handler bluetoothIn;
     final int handlerState = 0;
@@ -61,8 +61,10 @@ public class MainActivity extends AppCompatActivity {
         lblHumedad = findViewById(R.id.lblHumedadReal);
         lblLuminosidad = findViewById(R.id.lblLuminosidadReal);
         sbrBrillo = findViewById(R.id.sbrBrillo);
+        sbrContraste = findViewById(R.id.sbrContraste);
         txtMensajes = findViewById(R.id.txtMensajes);
         btnEnviarMensaje = findViewById(R.id.btnEnviarMensaje);
+        btnActualizar = findViewById(R.id.btnActualizar);
 
         bluetoothIn = new Handler(){
             @Override
@@ -78,9 +80,12 @@ public class MainActivity extends AppCompatActivity {
                     if(endOfLineIndex > 0){
                         String dataInPrint = dataStringIN.substring(0, endOfLineIndex);
                         dataStringIN.delete(0, dataStringIN.length());
-                        lblTemperatura.setText(dataInPrint.substring(0, 4));
-                        lblHumedad.setText(dataInPrint.substring(4, 8));
-                        lblLuminosidad.setText(dataInPrint.substring(8, 12));
+
+                        System.out.println(dataInPrint);
+                        String[] valoresClima = dataInPrint.split(",");
+                        lblTemperatura.setText(valoresClima[0]);
+                        lblHumedad.setText(valoresClima[1]);
+                        lblLuminosidad.setText(valoresClima[2]);
                     }
 
 
@@ -98,7 +103,8 @@ public class MainActivity extends AppCompatActivity {
         sbrBrillo.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                myConexionBT.write(progress + "");
+                System.out.println("2" + progress);
+                myConexionBT.write("2" + progress);
             }
 
             @Override
@@ -112,10 +118,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        sbrContraste.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progress = 170 - progress;
+                System.out.println("3" + progress);
+                myConexionBT.write("3" + progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
         btnEnviarMensaje.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myConexionBT.write(txtMensajes.getText().toString());
+                myConexionBT.write("1" + txtMensajes.getText().toString());
+            }
+        });
+
+        btnActualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myConexionBT.write("4");
             }
         });
 
