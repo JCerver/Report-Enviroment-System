@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//Paquete de la clase
 package Vistas;
 
+//Importación de librerias necesarias para los componentes 
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -23,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class PanelMensajes extends JPanel {
 
+    //Declaración de componentes
     private JPanel panelSuperior;
     private JTabbedPane panelTabbed;
     JPanel panelControlesMensajeNuevo, panelControlesMensajesPrevio, panelContenedorTabbed, panelVistaMensajes;
@@ -36,31 +34,36 @@ public class PanelMensajes extends JPanel {
     private GridBagLayout esquema;
     private GridBagConstraints restricciones;
 
+    //Constructor
     public PanelMensajes() {
         initComponents();
     }
 
+    //Método para inicializar los componentes declarados
     public void initComponents() {
+        //Panel contenedor primario
         panelSuperior = new JPanel(new BorderLayout());
         add(panelSuperior, BorderLayout.NORTH);
 
+        //Panel contenedor de los componentes para agregar nuevos mensajes
         panelControlesMensajeNuevo = new JPanel(new GridLayout(3, 1));
         lblTextoIngresar = new JLabel("Ingresa el mensaje:");
         panelControlesMensajeNuevo.add(lblTextoIngresar);
 
         txtMensajeNuevo = new JTextArea();
         scrollpane1 = new JScrollPane(txtMensajeNuevo);
- 
         panelControlesMensajeNuevo.add(scrollpane1);
-
         btnGuardar = new JButton("Guardar");
         panelControlesMensajeNuevo.add(btnGuardar);
 
+        //Panel contenedor de las pestañas de mensajes nuevo y previo
         panelContenedorTabbed = new JPanel(new BorderLayout());
-
         panelControlesMensajesPrevio = new JPanel(new BorderLayout());
+        
+        //Creación de la tabla y el modelo a utilizar en ella
         dtm = new DefaultTableModel(null, columnas);
         tabla = new JTable(dtm);
+        //Dimensiones de la tabla
         tabla.setPreferredScrollableViewportSize(new Dimension(500, 400));
         JScrollPane scroll = new JScrollPane(tabla);
 
@@ -78,6 +81,8 @@ public class PanelMensajes extends JPanel {
         lblHistorial = new JLabel("Mensaje completo:");
         txtMensajeHistorial = new JTextArea(20, 20);
         scrollpane12 = new JScrollPane(txtMensajeHistorial);
+        
+        //Metodo para agregar componentes
         agregarComponente(lblHistorial, 0, 1, 1, 1);
         agregarComponente(txtMensajeHistorial, 1, 1, 3, 1);
         agregarComponente(btnAnterior, 0, 0, 1, 1);
@@ -87,7 +92,7 @@ public class PanelMensajes extends JPanel {
         panelControlesMensajesPrevio.add(scroll, BorderLayout.WEST);
         panelControlesMensajesPrevio.add(panelVistaMensajes, BorderLayout.CENTER);
 
-        //Agregamos la tabla al centro
+        //Agregamos los paneles a cada pestaña correspondiente
         panelTabbed = new JTabbedPane();
         panelTabbed.addTab("Mensaje Nuevo", panelControlesMensajeNuevo);
         panelTabbed.addTab("Mensajes Previos", panelControlesMensajesPrevio);
@@ -96,6 +101,7 @@ public class PanelMensajes extends JPanel {
 
     }
 
+     //Metodo para agregar componentes
     private void agregarComponente(Component componente,
             int fila, int columna, int anchura, int altura) {
         restricciones.gridx = columna; // establece gridx
@@ -106,6 +112,8 @@ public class PanelMensajes extends JPanel {
         panelVistaMensajes.add(componente); // agrega el componente
     }
 
+    
+      //Metodos getters y setter para obtener acceso a los componentes fuera de la clase
     public JTextArea getTxtMensajeNuevo() {
         return txtMensajeNuevo;
     }

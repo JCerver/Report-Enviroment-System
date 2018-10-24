@@ -1,30 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//Paquete de la clase
 package Modelo;
 
-/**
- *
- * @author jcerver
- */
+
 public class Mensaje {
+    
+     //Declaración de variables
     private String mensaje;
     private String fecha;
     private String hora;
 
+    //Contructor por defecto
     public Mensaje() {
     }
     
     
-
+    //Constructor sobrecargado con parametros  
     public Mensaje(String mensaje, String fecha, String hora) {
         this.mensaje = mensaje;
         this.fecha = fecha;
         this.hora = hora;
     }
-
+    
+    
+    //Metodos getters y setter para obtener acceso a las variables fuera de la clase
     public String getMensaje() {
         return mensaje;
     }

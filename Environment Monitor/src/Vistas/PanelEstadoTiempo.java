@@ -1,6 +1,7 @@
-
+//Paquete de la clase
 package Vistas;
 
+//Importación de librerias necesarias para los componentes 
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -11,18 +12,24 @@ import javax.swing.JPanel;
 
 public class PanelEstadoTiempo extends JPanel{
 
+    //Declaración de componentes
     private GridBagLayout esquema;
     private GridBagConstraints restricciones;
     private JPanel panelVistaSensores,panelContenedor;
-      private JButton btnHumedad, btnTemperatura, btnLuminosidad, btnDesplazar,btnPausar;
+    private JButton btnHumedad, btnTemperatura, btnLuminosidad, btnDesplazar,btnPausar;
 
+     //Constructor
     public PanelEstadoTiempo() {
         initComponents();
     }
     
+    //Método para inicializar los componentes declarados
     public void initComponents(){
+        
+        //Panel contenedor primario
         panelContenedor = new JPanel(new BorderLayout());
         add(panelContenedor, BorderLayout.NORTH);
+        
          //Creación del panel que contiene los controles,con 
         //un gestor de esquema de tipo GridBagLayout.
         panelVistaSensores = new JPanel();
@@ -36,11 +43,15 @@ public class PanelEstadoTiempo extends JPanel{
         btnLuminosidad = new JButton("Luminosidad");
         btnDesplazar = new JButton("Desplazar mensaje");
         btnPausar = new JButton("Pausar mensaje");
+        
+        //Se agregan los componentes al panel
         agregarComponente(btnHumedad, 0, 0, 1, 1);
         agregarComponente(btnTemperatura, 0, 2, 1, 1);
         agregarComponente(btnLuminosidad, 0, 4, 1, 1);
         agregarComponente(btnDesplazar, 1, 1, 1, 1);
         agregarComponente(btnPausar, 1, 3, 1, 1);
+        
+        //Agregación del panel contenedor al panel primario
         panelContenedor.add(panelVistaSensores, BorderLayout.CENTER);
     }
     private void agregarComponente(Component componente,
@@ -53,6 +64,7 @@ public class PanelEstadoTiempo extends JPanel{
         panelVistaSensores.add(componente); // agrega el componente
     }
 
+    //Metodos getters y setter para obtener acceso a los componentes fuera de la clase
     public GridBagLayout getEsquema() {
         return esquema;
     }
