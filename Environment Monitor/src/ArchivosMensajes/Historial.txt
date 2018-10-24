@@ -13,9 +13,6 @@ EStoy escribiendo una prueba de mensaje
 Probando la nueva funcionalidad
 22/10/2018
 13:00:44
-HASLKAJSALKSJALKSJASLKJASLKASJ
-22/10/2018
-13:02:38
 prueba
 22/10/2018
 18:35:35
@@ -25,3 +22,27 @@ Lo que sea
 Ingenieria en Sistemas
 22/10/2018
 19:42:08
+fgfdgfgdfgdfgdfgdfgfdgdfgghjgjghjghjghjghjgjghjghjgh
+24/10/2018
+11:49:48
+Highway to hell es una rola de AC/DC en el 
+24/10/2018
+11:54:05
+Ingenieria en Sistemas assdsdsdsd
+24/10/2018
+11:54:05
+Ingenieria en Sistemas assdsdsdsdsdfsdfsdfsdf
+24/10/2018
+11:54:05
+Ingenieria en Sistemas assdsdsdsdsdfsd
+24/10/2018
+11:54:05
+Este es un mensaje de prueba para evaluar el desplazamiento en el display Este es un mensaje de prueba para evaluar el desplazamiento en el display
+24/10/2018
+12:54:24
+hola que tal
+24/10/2018
+13:00:12
+esta es otra prueba de como funciona el arduino al cambiar las filas que se muestran en el display y si funciona chido excelente
+24/10/2018
+13:03:01

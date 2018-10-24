@@ -32,28 +32,29 @@ public class ControladorArduino {
                     System.out.println(valor);
 
                     switch (valor) {
-                        case "A":
+                        /*case "A":
                             //System.out.println(valor);
                             System.out.println("Se presiono A");
-                            enviarMensaje("1");
-                            enviarMensaje("lA TEMPERATURA ES: ");
-                            enviarMensaje("2");
+                            //enviarMensaje("1");
+                            //enviarMensaje("lA TEMPERATURA ES: ");
+                           //enviarMensaje("2");
                             break;
                         case "B":
                             System.out.println(valor);
                             //enviarMensaje("1");
-                            enviarMensaje("1");
-                            enviarMensaje("lA HUMEDAD ES: ");
-                            enviarMensaje("3");
+                            //enviarMensaje("1");
+                            //enviarMensaje("lA HUMEDAD ES: ");
+                            //enviarMensaje("3");
                             break;
                         case "C":
                             System.out.println(valor);
                             //enviarMensaje("1");
-                            enviarMensaje("1");
-                            enviarMensaje("lA LUMINOSIDAD ES: ");
-                            enviarMensaje("4");
+                            //enviarMensaje("1");
+                            //enviarMensaje("lA LUMINOSIDAD ES: ");
+                            //enviarMensaje("4");
 
                             break;
+                        */
                         case "D":
                             System.out.println(valor);
                             //enviarMensaje("1");
@@ -97,7 +98,7 @@ public class ControladorArduino {
     public ControladorArduino() {
 
         try {
-            Arduino.arduinoRXTX("/dev/ttyACM0", 9600, eventoArduino);
+            Arduino.arduinoRXTX("/dev/ttyACM1", 9600, eventoArduino);
             //Arduino.arduinoTX("/dev/ttyACM0", 9600);
         } catch (ArduinoException ex) {
             Logger.getLogger(ControladorArduino.class.getName()).log(Level.SEVERE, null, ex);

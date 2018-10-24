@@ -5,6 +5,10 @@ void setupBluetooth() {
 }
 
 void loopBluetooth() {
+  loopSensorHumedad();
+  loopSensorLuz();
+  loopSensorTemperatura();
+  
   if (BT1.available()){
     int opt = BT1.read();
    Serial.println(opt);
@@ -14,9 +18,12 @@ void loopBluetooth() {
       opcionBluetooth = 2;
     if(opt == '3')
       opcionBluetooth = 3;
-    if(opt == '4'){
+    if(opt == '4')
       opcionBluetooth = 4;
+    if(opt == '5'){
+      opcionBluetooth = 5;
     }
+      
   }
 }
 
@@ -40,24 +47,20 @@ void cambiarContraste(){
 
 void enviarMensajeBluetooth(){
   if(BT1.available()){
-    String cadena = BT1.readString();
-    lcd.clear();
-    String linea1=cadena.substring(0,20);
-      String linea2=cadena.substring(21,40);
-      String linea3=cadena.substring(42,60);
-      String linea4=cadena.substring(61,80);
-    lcd.setCursor(0,0),
-      lcd.print(linea1);
-      lcd.setCursor(0,1),
-      lcd.print(linea2);
-      lcd.setCursor(0,2),
-      lcd.print(linea3); 
-      lcd.setCursor(0,3),
-      lcd.print(linea4);
-    
+    mensaje = BT1.readString();
+  
   }
+  
+}
+
+void enviarFechaBluetooth(){
+  if(BT1.available()){
+    fecha = BT1.readString();
+  }
+  lineaActual = 0;
+  showDisplay();
   opcionBluetooth = 0;
-  opcion = 1;
+//  opcion = 1;
 }
 
     

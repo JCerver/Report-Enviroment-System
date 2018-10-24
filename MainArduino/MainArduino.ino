@@ -3,6 +3,8 @@
 #include <LiquidCrystal.h>                //anadir la libreria para gestionar un display LCD
 #include <Keypad.h>
 
+
+
 /************************************************
   Programa: Sistema de simulación de alarma de seguridad
 
@@ -41,9 +43,9 @@ SoftwareSerial BT1(12, 13); // RX | TX
 /****************         Construcor para gestionar el LCD Diaplay       *******************/
 LiquidCrystal lcd(RS, E, D4, D5, D6, D7);
 
-
-
-
+String mensaje="";
+String fecha="";
+int lineaActual = 0;
 
 
 
@@ -178,6 +180,8 @@ void loop() {
     cambiarContraste();
   } else if(opcionBluetooth == 4){
     enviaClimaAndroid();
+  }else if(opcionBluetooth == 5){
+    enviarFechaBluetooth();
   }
 
 
@@ -197,14 +201,14 @@ void verificarOpcion() {
     }
 
     if (!isMedicionClimatica) {
-      lcd.setCursor(0, 0);
-      lcd.clear();
-      while (Serial.available() > 0) {
-        //lcd.autoscroll();
-        lcd.write(Serial.read());
-        delay(100);
-
+      if (opcion == '7') {
+        lineaActual=0;
+        loopDisplay();
+      }else if(opcion == '8') {
+        loopDisplay2();
       }
+        showDisplay();
+      
     }
 
   }

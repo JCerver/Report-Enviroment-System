@@ -36,14 +36,14 @@ public class ControladorEstadoTiempo extends InternalFrameAdapter implements Act
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == accesoControles.getBtnHumedad()) {
-            controladorArduino.enviarMensaje("2");
+            controladorArduino.enviarMensaje("22");
             System.out.println("Fui presionado y soy humedad");
         } else if (e.getSource() == accesoControles.getBtnTemperatura()) {
-            controladorArduino.enviarMensaje("3");
+            controladorArduino.enviarMensaje("33");
             System.out.println("Fui presionado y soy temperatura");
         } else if (e.getSource() == accesoControles.getBtnLuminosidad()) {
             System.out.println("Fui presionado y soy luminosidad");
-                controladorArduino.enviarMensaje("4");
+                controladorArduino.enviarMensaje("44");
         } else if (e.getSource() == accesoControles.getBtnDesplazar()) {
             //controladorArduino.enviarMensaje("1");
             System.out.println("Fui presionado y desplazo");

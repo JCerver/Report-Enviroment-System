@@ -24,6 +24,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Calendar;
 import java.util.UUID;
 
 
@@ -83,9 +84,9 @@ public class MainActivity extends AppCompatActivity {
 
                         System.out.println(dataInPrint);
                         String[] valoresClima = dataInPrint.split(",");
-                        lblTemperatura.setText(valoresClima[0]);
-                        lblHumedad.setText(valoresClima[1]);
-                        lblLuminosidad.setText(valoresClima[2]);
+                        lblTemperatura.setText(valoresClima[0] + " C°");
+                        lblHumedad.setText(valoresClima[1] + " h");
+                        lblLuminosidad.setText(valoresClima[2] + " lux");
                     }
 
 
@@ -140,6 +141,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 myConexionBT.write("1" + txtMensajes.getText().toString());
+                try {
+                    Thread.sleep(1800);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Calendar fecha = Calendar.getInstance();
+                myConexionBT.write("5" + fecha.getTime().getDate() + "/" + fecha.getTime().getMonth() + "/" + (1900 + fecha.getTime().getYear()) + "  " + fecha.getTime().getHours() + ":" + fecha.getTime().getMinutes());
             }
         });
 

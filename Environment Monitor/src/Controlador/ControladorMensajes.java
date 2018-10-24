@@ -29,6 +29,8 @@ import javax.swing.event.InternalFrameEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -173,13 +175,19 @@ public class ControladorMensajes extends InternalFrameAdapter implements ActionL
             mensajes.add(m);
             escribirArchivo();
             actualizarTabla();
-            controladorArduino2.enviarMensaje("1");
-            controladorArduino2.enviarMensaje(accesoControles.getTxtMensajeNuevo().getText());
+            //controladorArduino2.enviarMensaje("7");
+            //controladorArduino2.enviarMensaje(accesoControles.getTxtMensajeNuevo().getText());
         }else if(e.getSource() == accesoControles.getBtnMostrar()){
-            controladorArduino2.enviarMensaje("1");//para indicar que es un mensaje
+            controladorArduino2.enviarMensaje("7");//para indicar que es un mensaje
             controladorArduino2.enviarMensaje(accesoControles.getTxtMensajeHistorial().getText());
-            String fechaCompleta=fechaLeida+"      "+HoraLeida;
-            controladorArduino2.enviarMensaje("      "+fechaCompleta);
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ControladorMensajes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             controladorArduino2.enviarMensaje("8");//para indicar que es un mensaje
+            String fechaCompleta=fechaLeida+"  "+HoraLeida;
+            controladorArduino2.enviarMensaje(fechaCompleta);
             
         }else if(e.getSource() == accesoControles.getBtnEliminar()){
             eliminarDeTabla();
