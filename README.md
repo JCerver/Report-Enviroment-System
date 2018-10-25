@@ -161,6 +161,18 @@ Este es el resultado al armar el circuito mostrado en el diagrama de arriba
 
 ![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/circuito1.jpg "Circuito fisico")	
 
+## Vista del circuito con funcionalidad extra (con funcionalidad Bluetooth):
+![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/luminosidad.jpg "enviando mensaje luminosidad")	
+
+![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/humedad.jpg "enviando mensaje humedad")	
+
+![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/temperatura.jpg "enviando mensaje temperatura")	
+
+![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/mensajes1.jpg "enviando mensaje almacenado 1")	
+
+![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/mensajes2.jpg "enviando mensaje almacenado 2")
+
+
 ***
 
 # Conceptos técnicos
