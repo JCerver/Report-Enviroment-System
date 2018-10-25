@@ -3,12 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/home/alfredo/Arduino/ProyectosEquipo/Report-Enviroment-System/Environment%20Monitor/src/Controlador/ControladorEstadoTiempo.java</file>
             <file>file:/home/alfredo/Arduino/ProyectosEquipo/Report-Enviroment-System/Environment%20Monitor/src/Controlador/ControladorMensajes.java</file>
             <file>file:/home/alfredo/Arduino/ProyectosEquipo/Report-Enviroment-System/Environment%20Monitor/src/Testing/Ejecucion.java</file>
             <file>file:/home/alfredo/Arduino/ProyectosEquipo/Report-Enviroment-System/Environment%20Monitor/src/Controlador/ControladorArduino.java</file>
             <file>file:/home/alfredo/Arduino/ProyectosEquipo/Report-Enviroment-System/Environment%20Monitor/src/ArchivosMensajes/Historial.txt</file>
             <file>file:/home/alfredo/Arduino/ProyectosEquipo/Report-Enviroment-System/Environment%20Monitor/src/Vistas/VistaPrincipal.java</file>
+=======
+            <file>file:/home/migue/Documentos/7°%20Semestre/Sistemas%20Programables/Prácticas/Práctica%20de%20Display/Report-Enviroment-System/Environment%20Monitor/src/Testing/Ejecucion.java</file>
+>>>>>>> 7964f6226b06c955dda1f8c4117ee68c6902db4d
         </group>
     </open-files>
 </project-private>

@@ -1,17 +1,19 @@
+
+
 # Sistema Vizualizador de mensajes y mediciones ambientales
 
 ## Descripción
 ***
-El programa muestra una interfaz grafica realizada en Java, la cual permite introducir una serie de mensajes y de igual forma eliminarlos, dichos mensajes se pueden visualizar desde la misma interfaz del software y a su vez se pueden enviar a un Display LCD conectado a un arduino (El cual contiene un programa de arduino previamente cargado en el arduino.) 
-El sistema permite ademas mostrar ya sea en la interfaz grafica o el en Display LCD las mediciones de Temperatura, Luminosidad o de Humedad.
-Las mediciones son realizadas mediante el arduino obteneidndo los valores en tiempo real de los sensores LM35 (Sensor de temperatura), DHT11(Sensor de humedad y temperatura) y un fotoresistor (sensor de luminosidad)
+El programa muestra una interfaz gráfica realizada en Java, la cual permite introducir una serie de mensajes y de igual forma eliminarlos, dichos mensajes se pueden visualizar desde la misma interfaz del software y a su vez se pueden enviar a un Display LCD conectado a un arduino (el cual contiene un programa previamente cargado). 
+El sistema permite ademas mostrar ya sea en la interfaz gráfica o en el Display LCD las mediciones de Temperatura, Luminosidad o de Humedad.
+Las mediciones son realizadas mediante el arduino obteniendo los valores en tiempo real de los sensores LM35 (sensor de temperatura), DHT11 (sensor de humedad y temperatura) y un fotoresistor (sensor de luminosidad)
 
-Un teclado matricial nos proporciona mostrar las mediciones de temperatura, luminosidad y humedad con los botones A, B, y C correspondientemente
+Un teclado matricial nos ayuda a navegar entre los mensajes y desplazarnos en su contenido.
 ***
 
 ## Caracteristicas
 ***
-Los mensajes deberán ser solamente con 140 carácteres de espacio, se debe de incluir la fecha y hora de emisión del mensaje (Se incluye solo la fecha y hora en que se guardaron los mensajes ingresados por el usuario)
+Se deberán de admitir mensajes de hasta 140 caracteres de espacio sin presentar problemas, se debe de incluir la fecha y hora de emisión del mensaje (Se incluye solo la fecha y hora en que se guardaron los mensajes ingresados por el usuario)
 ***
 
 ## Datos de los Alumnos
@@ -40,9 +42,11 @@ Los mensajes deberán ser solamente con 140 carácteres de espacio, se debe de i
 
 *    El Arduino IDE el cual se puede descargar de la pagina oficial: [Pagina de Arduino](https://www.arduino.cc/en/Main/Software)  
 *    Git ya sea en linux o windows en caso de querer clonar el repositorio.
-*    Netbeans con OpenJDK el cual puede descargarse deste la tienda de ubuntu
+*    Netbeans con OpenJDK el cual puede descargarse desde la tienda de Ubuntu
 *    Libreria PanamaHitek_Arduino-3.0.0.jar (Ya se encuentra dentro del proyecto de java en /src/librerias/)
 *    Libreria RXTXcomm.jar (Ya se encuentra dentro del proyecto de java en /src/librerias/)
+*    El IDE de [Android Studio](https://developer.android.com/studio/) para correr el código fuente incluido.
+*    Se puede prescindir de Android Studio instalando el APK que también está en el repositorio
 
 ### Instalación de GIT
 para instalar git solo se tiene que abrir una terminal e introducir el siguiente comando
@@ -54,14 +58,15 @@ $ apt-get install git
 ## Materiales: 🔧
 
 *    2 Protoboard.
-*    1 Arduino MEGA (o cualquier otro).
-*    1 Display LCD (En este ejemplo se usó uno de 40*4)
-*    1 Potencometro
+*    1 Arduino MEGA (o alguno equivalente).
+*    1 Display LCD (En este ejemplo se usó uno de 20*4)
+*    1 Potenciómetro
 *    1 Sensor de Temperatura LM35
 *    1 Sensor de Luminosidad LDR
 *    1 Sensor de Humedad DTH11 con PCB
 *    1 Teclado matricial
-*    cables 
+*    1 Módulo de bluetooth HC05 o HC06
+*    Cables 
 
 
 ***
@@ -81,7 +86,7 @@ $ git init
 $ git clone git://github.com/JCerver/Report-Enviroment-System.git
 
 ```
-Y es todo ya tendras clonado el repositorio en tu directorio.
+Y es todo ya tendrás clonado el repositorio en tu directorio.
 
 ***
 
@@ -120,6 +125,7 @@ El programa ubicado en la carpeta "Enviroment Monitor" contiene todas las clases
 #### Importar las siguientes librerias:
 * PanamaHitek_Arduino-3.0.0.jar
 * RXTXcomm.jar
+* KeyPad.jar
 
 En caso de ser necesario importar las librerias las puedes agregar desde la carpeta del mismo proyecto ubicadas en la ruta "/src/librerias/"
 (Ambas librerias permiten realizar la conexión con el puerto serial y crear un objeto de arduino para el envio y recepción de mensajes a travez del puerto serial)
@@ -136,16 +142,21 @@ Dentro del proyecto de Java, dirigete a la clase "ControladorArduino.java" ubica
 
 
 
-Si no sabemos el nombre del puerto Serial que esta haciendo la conexión con arduino puedes dirigirte al IDE de arduino, conectar tu arduino a tu computadora y dirigirte a la opción, "Herramientas", seleccionar el arduino que estas conectado y ver que puerto Serial esta haciendo la conexcion, ese puerto se debe de escribir en la clase "ControladorArduino.java"
+Si no sabemos el nombre del puerto Serial que esta haciendo la conexión con Arduino puedes dirigirte al IDE de arduino, conectar tu arduino a tu computadora y dirigirte a la opción, "Herramientas", seleccionar el arduino que estas conectado y ver que puerto Serial esta haciendo la conexcion, ese puerto se debe de escribir en la clase "ControladorArduino.java"
 
 ![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/puertoConectadoAArduino.png "Puerto serial que conecta con arduino")	
-
-
 
 
 #### Ejecutar el programa 
 Para esto es indispensable que el Arduino este conectado a tu computadora y con el programa de Arduino ya cargado previamente en él. Y listo ya podrás interactuar con la interfaz gráfica del programa o el teclado matricial.
 
+### 5. Abrir aplicación móvil
+Instalar el APK que se encuentra en la carpeta de "Apk" en tu dispositivo Android. O bien puedes correr el código fuente en Android Studio desde la carpeta "BluetoothArduino" y carga la aplicación atu móvil. Quizá sea necesario modificar la interfaz para algunos modelos de teléfonos ya que podría diferir la visualización de los componentes en diferentes pantallas.
+
+#### Conectar el móvil al módulo HC05
+Al abrir la aplicación de Android aparecerán los dispositivos vinculados, por loq ue será necesario primero vincular el HC05 desde la configuración Bluetooth de tu equipo para que aparezca en la aplicación. Luego seleccionas el nombre de HC05, esperas algunos segundos y podrás ver la interfaz donde podrás enviar mensajes a la pantalla LCD, calibrar el brillo y contraste de la misma y además podrás ver la temperatura, humedad y cantidad de luz en la pantalla del equipo.
+![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/apk_lista_bluetooth.png "LIsta dispositivos Bluetooth")
+![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/apk_interfaz.png "Interfaz aplicación móvil")
 ***
 
 
@@ -161,7 +172,13 @@ Este es el resultado al armar el circuito mostrado en el diagrama de arriba
 
 ![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/circuito1.jpg "Circuito fisico")	
 
-***
+
+ ## Vista del circuito con funcionalidad extra (con funcionalidad Bluetooth):
+![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/luminosidad.jpg "enviando mensaje luminosidad")	
+ ![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/humedad.jpg "enviando mensaje humedad")	
+ ![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/temperatura.jpg "enviando mensaje temperatura")	
+ ![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/mensajes1.jpg "enviando mensaje almacenado 1")	
+ ![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/mensajes2.jpg "enviando mensaje almacenado 2")
 
 # Conceptos técnicos
 Si quieres saber como funciona el programa es necesario conocer algo de teoria para conocer que existe detrás de la magia:
@@ -255,9 +272,20 @@ Para mas información consultar la fuente:
 
 ***
 
+## Módulo Bluetooth HC05
+
+## ¿Qué es?
+El Bluetooth HC-05 es un pequeño modulo transmisor/receptor TTL fue diseñado para ser controlado a través de RS232. Permite transmitir como recibir datos a través de tecnología bluetooth sin conectar cables a los dispositivos a comunicar. Es un dispositivo muy facil de usar y compacto se controla mediante comandos AT por el puerto serie. Es compatible con Arduino o cualquier microcontrolador con UART
+
+## ¿Cómo funciona?
+Como el módulo BlueTooth es básicamente un nodo BT conectado a un interface serie, podríamos en principio conectar los pines RX y Tx a los equivalentes de Arduino en los pines 0 y 1 digitales, sin más que cruzarlos (BT Tx  a Arduino Rx y BT Rx a Aduano Tx) y de hecho muchos ejemplos en Internet utilizan este esquema y se comunican con el BT mediante las familiares instrucciones de Serial.print ().
+
+Sin embargo, puesto que los pines 0 y 1 se utilizan en la comunicación serie de Arduino con el PC a través del USB y por tanto, si los usamos para comunicar con el modulo BT, perderíamos la conexión con el PC, es mejor usar otros pines.
+
+Para ello tenemos que importar una librería que habilite la comunicación serie con otros pines como es la librería SoftwareSerial.
+
 # Autores ✒️
 * **José Guadalupe de Jesús Cervera Barbosa** - *Trabajo general* - [JCerver](https://github.com/JCerver)
 * **Miguel Ángel Ramírez Lira** - *Trabajo general* - [mikeangelsoldier](https://github.com/mikeangelsoldier/)
 * **Alfredo Valivia Barajas** - *Trabajo general* - [alfredo97](https://github.com/alfredo97)
-
 
