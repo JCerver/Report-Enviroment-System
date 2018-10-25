@@ -26,14 +26,14 @@ void showDisplay() {
 
 
   lcd.clear();
-  String linea1 = mensaje.substring(0, 20);
-  String linea2 = mensaje.substring(21, 40);
-  String linea3 = mensaje.substring(41, 60);
-  String linea4 = mensaje.substring(61, 80);
-  String linea5 = mensaje.substring(81, 100);
-  String linea6 = mensaje.substring(101, 120);
-  String linea7 = mensaje.substring(121, 140);
-  String linea8 = mensaje.substring(141, 160);
+  String linea1 = mensaje.substring(0, 21);
+  String linea2 = mensaje.substring(20, 41);
+  String linea3 = mensaje.substring(41, 61);
+  String linea4 = mensaje.substring(61, 81);
+  String linea5 = mensaje.substring(81, 101);
+  String linea6 = mensaje.substring(101, 121);
+  String linea7 = mensaje.substring(121, 141);
+  String linea8 = mensaje.substring(141, 161);
 
 
 

@@ -30,20 +30,19 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView lblTemperatura, lblHumedad, lblLuminosidad;
-    private SeekBar sbrBrillo, sbrContraste;
-    private TextInputEditText txtMensajes;
-    private Button btnEnviarMensaje, btnActualizar;
+    private TextView lblTemperatura, lblHumedad, lblLuminosidad;    //Etiquetas de la interfaz
+    private SeekBar sbrBrillo, sbrContraste;                        //Barras de control de brillo y contraste
+    private TextInputEditText txtMensajes;                          //Entrada de texto para enviar mensaje
+    private Button btnEnviarMensaje, btnActualizar;                 //Botones para enviar mensaje y actualizar datos climatolóticos
 
-    private Handler bluetoothIn;
-    final int handlerState = 0;
-    private BluetoothAdapter btAdapter = null;
-    private BluetoothSocket btSocket = null;
-    private StringBuilder dataStringIN = new StringBuilder();
-    private ConnectedThread myConexionBT;
+    private Handler bluetoothIn;                                    //Es el handler que permite estra al pendiente de la entrada de los datso desde Bluetooth
+    final int handlerState = 0;                                     //Esatdo del handler
+    private BluetoothAdapter btAdapter = null;                      //Adaptador de bluetooth que nos permite manipular el funcionamiento de bluetooth
+    private BluetoothSocket btSocket = null;                        //Socket para poder establecer conexión con dispositivos bluetooth
+    private StringBuilder dataStringIN = new StringBuilder();       //Guarda los mensajes que se reciben por bluetooth
+    private ConnectedThread myConexionBT;                           //Maneja el hilo de ejecución que está a la espera de recibir o enviar datos por Bluetooth
 
     //Identificador único de servicio
-//    private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B4FB");
     private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     //String para la  MAC
@@ -54,10 +53,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-  //      Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
 
-
+        //Determinar los componentes desde la interfaz para poderlas utilizar
         lblTemperatura = findViewById(R.id.lblTemperaturaReal);
         lblHumedad = findViewById(R.id.lblHumedadReal);
         lblLuminosidad = findViewById(R.id.lblLuminosidadReal);
@@ -67,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         btnEnviarMensaje = findViewById(R.id.btnEnviarMensaje);
         btnActualizar = findViewById(R.id.btnActualizar);
 
+        //A la espera de recibir mensajes por bluetooth
         bluetoothIn = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -75,18 +73,20 @@ public class MainActivity extends AppCompatActivity {
                     String readMessage = (String) msg.obj;
 
                     dataStringIN.append(readMessage);
-
+                    //Para encontrar el fin del mensaje se tienen que enviar con el signo gato al final
                     int endOfLineIndex = dataStringIN.indexOf("#");
 
+                    //Mientras no se llegue al final de línea se siguen agregando os bytes a la cadena ya que se envían por partes por el serial.
+                    // De esta forma se obtiene el mensaje completo sin cortes
                     if(endOfLineIndex > 0){
                         String dataInPrint = dataStringIN.substring(0, endOfLineIndex);
                         dataStringIN.delete(0, dataStringIN.length());
 
-                        System.out.println(dataInPrint);
+                        //La cadena recibida contiene 3 valores separados por coma por lo que se dividen y se guardan por separado en un arreglo para luego mosrarlos en los TextView
                         String[] valoresClima = dataInPrint.split(",");
                         lblTemperatura.setText(valoresClima[0] + " C°");
-                        lblHumedad.setText(valoresClima[1] + " h");
-                        lblLuminosidad.setText(valoresClima[2] + " lux");
+                        lblHumedad.setText(valoresClima[1] + " %");
+                        lblLuminosidad.setText(valoresClima[2] + " lx");
                     }
 
 
@@ -97,14 +97,16 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        //Se procede a revisar si la conexión Bluetooth es posible o está activada
         btAdapter = BluetoothAdapter.getDefaultAdapter();
         verificarEstadoBT();
 
 
+        //Disparador de eventos cuando se cambia el valor del SeekBar de brillo
         sbrBrillo.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                System.out.println("2" + progress);
+                //Se necesita enviar un 2 al principio para que Arduino identifique que debe cambiar el brillo
                 myConexionBT.write("2" + progress);
             }
 
@@ -119,11 +121,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Disparador de eventos cuando se cambia el valor del SeekBar de contraste
         sbrContraste.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 progress = 170 - progress;
-                System.out.println("3" + progress);
+                //Se necesita enviar un 2 al principio para que Arduino identifique que debe cambiar el contraste
                 myConexionBT.write("3" + progress);
             }
 
@@ -137,20 +140,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //LA presionar el botón de enviar, se envía tanto mensaje como fecha actual al Arduino
         btnEnviarMensaje.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Es necesario hacer una pausa antes de enviar la fecha para que Arduino lo reconozca como datos diferentes al mensaje y a la fecha
                 myConexionBT.write("1" + txtMensajes.getText().toString());
                 try {
                     Thread.sleep(1800);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
                 Calendar fecha = Calendar.getInstance();
                 myConexionBT.write("5" + fecha.getTime().getDate() + "/" + fecha.getTime().getMonth() + "/" + (1900 + fecha.getTime().getYear()) + "  " + fecha.getTime().getHours() + ":" + fecha.getTime().getMinutes());
             }
         });
 
+        //Se manda un 4 al Arduino para que nos regrese luego los datos climatológicos
         btnActualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,12 +178,13 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
 
+        //Se detectan los dispositivos Bluetooth vinculados al móvil
         Intent intent = getIntent();
         address = intent.getStringExtra(Dispositivos.EXTRA_DEVICES_ADDRESS);
-        Toast.makeText(getBaseContext(), address, Toast.LENGTH_LONG).show();
 
         BluetoothDevice device = btAdapter.getRemoteDevice(address);
 
+        //Se intenta crear socket de conexion
         try{
             btSocket = createBluetoothSocket(device);
 
@@ -230,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class ConnectedThread extends Thread{
+        //Streams que nos permiten dar los datos a mandar o rescatar los datos enviados desde Arduino
         private final InputStream inStream;
         private final OutputStream outStream;
 
