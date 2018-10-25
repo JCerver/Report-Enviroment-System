@@ -167,6 +167,10 @@ Diagrama de circuito:
 ![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/diagrama.png "Diagrama del circuito")	
 
 
+Diagrama del circuito con Extra de Bluetooth
+
+![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/diagrama_extra.png "Diagrama del circuito")	
+
 ## Vista del circuito armado:
 Este es el resultado al armar el circuito mostrado en el diagrama de arriba
 
