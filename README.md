@@ -1,17 +1,18 @@
+
 # Sistema Vizualizador de mensajes y mediciones ambientales
 
 ## Descripción
 ***
-El programa muestra una interfaz grafica realizada en Java, la cual permite introducir una serie de mensajes y de igual forma eliminarlos, dichos mensajes se pueden visualizar desde la misma interfaz del software y a su vez se pueden enviar a un Display LCD conectado a un arduino (El cual contiene un programa de arduino previamente cargado en el arduino.) 
-El sistema permite ademas mostrar ya sea en la interfaz grafica o el en Display LCD las mediciones de Temperatura, Luminosidad o de Humedad.
-Las mediciones son realizadas mediante el arduino obteneidndo los valores en tiempo real de los sensores LM35 (Sensor de temperatura), DHT11(Sensor de humedad y temperatura) y un fotoresistor (sensor de luminosidad)
+El programa muestra una interfaz gráfica realizada en Java, la cual permite introducir una serie de mensajes y de igual forma eliminarlos, dichos mensajes se pueden visualizar desde la misma interfaz del software y a su vez se pueden enviar a un Display LCD conectado a un arduino (el cual contiene un programa previamente cargado). 
+El sistema permite ademas mostrar ya sea en la interfaz gráfica o en el Display LCD las mediciones de Temperatura, Luminosidad o de Humedad.
+Las mediciones son realizadas mediante el arduino obteniendo los valores en tiempo real de los sensores LM35 (sensor de temperatura), DHT11 (sensor de humedad y temperatura) y un fotoresistor (sensor de luminosidad)
 
-Un teclado matricial nos proporciona mostrar las mediciones de temperatura, luminosidad y humedad con los botones A, B, y C correspondientemente
+Un teclado matricial nos ayuda a navegar entre los mensajes y desplazarnos en su contenido.
 ***
 
 ## Caracteristicas
 ***
-Los mensajes deberán ser solamente con 140 carácteres de espacio, se debe de incluir la fecha y hora de emisión del mensaje (Se incluye solo la fecha y hora en que se guardaron los mensajes ingresados por el usuario)
+Se deberán de admitir mensajes de hasta 140 caracteres de espacio sin presentar problemas, se debe de incluir la fecha y hora de emisión del mensaje (Se incluye solo la fecha y hora en que se guardaron los mensajes ingresados por el usuario)
 ***
 
 ## Datos de los Alumnos
@@ -40,9 +41,11 @@ Los mensajes deberán ser solamente con 140 carácteres de espacio, se debe de i
 
 *    El Arduino IDE el cual se puede descargar de la pagina oficial: [Pagina de Arduino](https://www.arduino.cc/en/Main/Software)  
 *    Git ya sea en linux o windows en caso de querer clonar el repositorio.
-*    Netbeans con OpenJDK el cual puede descargarse deste la tienda de ubuntu
+*    Netbeans con OpenJDK el cual puede descargarse desde la tienda de Ubuntu
 *    Libreria PanamaHitek_Arduino-3.0.0.jar (Ya se encuentra dentro del proyecto de java en /src/librerias/)
 *    Libreria RXTXcomm.jar (Ya se encuentra dentro del proyecto de java en /src/librerias/)
+*    El IDE de [Android Studio](https://developer.android.com/studio/) para correr el código fuente incluido.
+*    Se puede prescindir de Android Studio instalando el APK que también está en el repositorio
 
 ### Instalación de GIT
 para instalar git solo se tiene que abrir una terminal e introducir el siguiente comando
@@ -54,14 +57,15 @@ $ apt-get install git
 ## Materiales: 🔧
 
 *    2 Protoboard.
-*    1 Arduino MEGA (o cualquier otro).
-*    1 Display LCD (En este ejemplo se usó uno de 40*4)
-*    1 Potencometro
+*    1 Arduino MEGA (o alguno equivalente).
+*    1 Display LCD (En este ejemplo se usó uno de 20*4)
+*    1 Potenciómetro
 *    1 Sensor de Temperatura LM35
 *    1 Sensor de Luminosidad LDR
 *    1 Sensor de Humedad DTH11 con PCB
 *    1 Teclado matricial
-*    cables 
+*    1 Módulo de bluetooth HC05 o HC06
+*    Cables 
 
 
 ***
@@ -81,7 +85,7 @@ $ git init
 $ git clone git://github.com/JCerver/Report-Enviroment-System.git
 
 ```
-Y es todo ya tendras clonado el repositorio en tu directorio.
+Y es todo ya tendrás clonado el repositorio en tu directorio.
 
 ***
 
@@ -120,6 +124,7 @@ El programa ubicado en la carpeta "Enviroment Monitor" contiene todas las clases
 #### Importar las siguientes librerias:
 * PanamaHitek_Arduino-3.0.0.jar
 * RXTXcomm.jar
+* KeyPad.jar
 
 En caso de ser necesario importar las librerias las puedes agregar desde la carpeta del mismo proyecto ubicadas en la ruta "/src/librerias/"
 (Ambas librerias permiten realizar la conexión con el puerto serial y crear un objeto de arduino para el envio y recepción de mensajes a travez del puerto serial)
@@ -136,7 +141,7 @@ Dentro del proyecto de Java, dirigete a la clase "ControladorArduino.java" ubica
 
 
 
-Si no sabemos el nombre del puerto Serial que esta haciendo la conexión con arduino puedes dirigirte al IDE de arduino, conectar tu arduino a tu computadora y dirigirte a la opción, "Herramientas", seleccionar el arduino que estas conectado y ver que puerto Serial esta haciendo la conexcion, ese puerto se debe de escribir en la clase "ControladorArduino.java"
+Si no sabemos el nombre del puerto Serial que esta haciendo la conexión con Arduino puedes dirigirte al IDE de arduino, conectar tu arduino a tu computadora y dirigirte a la opción, "Herramientas", seleccionar el arduino que estas conectado y ver que puerto Serial esta haciendo la conexcion, ese puerto se debe de escribir en la clase "ControladorArduino.java"
 
 ![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/puertoConectadoAArduino.png "Puerto serial que conecta con arduino")	
 
@@ -160,18 +165,6 @@ Diagrama de circuito:
 Este es el resultado al armar el circuito mostrado en el diagrama de arriba
 
 ![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/circuito1.jpg "Circuito fisico")	
-
-## Vista del circuito con funcionalidad extra (con funcionalidad Bluetooth):
-![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/luminosidad.jpg "enviando mensaje luminosidad")	
-
-![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/humedad.jpg "enviando mensaje humedad")	
-
-![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/temperatura.jpg "enviando mensaje temperatura")	
-
-![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/mensajes1.jpg "enviando mensaje almacenado 1")	
-
-![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/mensajes2.jpg "enviando mensaje almacenado 2")
-
 
 ***
 
