@@ -1,4 +1,5 @@
 
+
 # Sistema Vizualizador de mensajes y mediciones ambientales
 
 ## Descripción
@@ -146,11 +147,16 @@ Si no sabemos el nombre del puerto Serial que esta haciendo la conexión con Ard
 ![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/puertoConectadoAArduino.png "Puerto serial que conecta con arduino")	
 
 
-
-
 #### Ejecutar el programa 
 Para esto es indispensable que el Arduino este conectado a tu computadora y con el programa de Arduino ya cargado previamente en él. Y listo ya podrás interactuar con la interfaz gráfica del programa o el teclado matricial.
 
+### 5. Abrir aplicación móvil
+Instalar el APK que se encuentra en la carpeta de "Apk" en tu dispositivo Android. O bien puedes correr el código fuente en Android Studio desde la carpeta "BluetoothArduino" y carga la aplicación atu móvil. Quizá sea necesario modificar la interfaz para algunos modelos de teléfonos ya que podría diferir la visualización de los componentes en diferentes pantallas.
+
+#### Conectar el móvil al módulo HC05
+Al abrir la aplicación de Android aparecerán los dispositivos vinculados, por loq ue será necesario primero vincular el HC05 desde la configuración Bluetooth de tu equipo para que aparezca en la aplicación. Luego seleccionas el nombre de HC05, esperas algunos segundos y podrás ver la interfaz donde podrás enviar mensajes a la pantalla LCD, calibrar el brillo y contraste de la misma y además podrás ver la temperatura, humedad y cantidad de luz en la pantalla del equipo.
+![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/apk_lista_bluetooth.png "LIsta dispositivos Bluetooth")
+![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/apk_interfaz.png "Interfaz aplicación móvil")
 ***
 
 
@@ -166,7 +172,13 @@ Este es el resultado al armar el circuito mostrado en el diagrama de arriba
 
 ![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/circuito1.jpg "Circuito fisico")	
 
-***
+
+ ## Vista del circuito con funcionalidad extra (con funcionalidad Bluetooth):
+![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/luminosidad.jpg "enviando mensaje luminosidad")	
+ ![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/humedad.jpg "enviando mensaje humedad")	
+ ![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/temperatura.jpg "enviando mensaje temperatura")	
+ ![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/mensajes1.jpg "enviando mensaje almacenado 1")	
+ ![alt text](https://github.com/JCerver/Report-Enviroment-System/blob/master/imagenes/mensajes2.jpg "enviando mensaje almacenado 2")
 
 # Conceptos técnicos
 Si quieres saber como funciona el programa es necesario conocer algo de teoria para conocer que existe detrás de la magia:
@@ -260,9 +272,20 @@ Para mas información consultar la fuente:
 
 ***
 
+## Módulo Bluetooth HC05
+
+## ¿Qué es?
+El Bluetooth HC-05 es un pequeño modulo transmisor/receptor TTL fue diseñado para ser controlado a través de RS232. Permite transmitir como recibir datos a través de tecnología bluetooth sin conectar cables a los dispositivos a comunicar. Es un dispositivo muy facil de usar y compacto se controla mediante comandos AT por el puerto serie. Es compatible con Arduino o cualquier microcontrolador con UART
+
+## ¿Cómo funciona?
+Como el módulo BlueTooth es básicamente un nodo BT conectado a un interface serie, podríamos en principio conectar los pines RX y Tx a los equivalentes de Arduino en los pines 0 y 1 digitales, sin más que cruzarlos (BT Tx  a Arduino Rx y BT Rx a Aduano Tx) y de hecho muchos ejemplos en Internet utilizan este esquema y se comunican con el BT mediante las familiares instrucciones de Serial.print ().
+
+Sin embargo, puesto que los pines 0 y 1 se utilizan en la comunicación serie de Arduino con el PC a través del USB y por tanto, si los usamos para comunicar con el modulo BT, perderíamos la conexión con el PC, es mejor usar otros pines.
+
+Para ello tenemos que importar una librería que habilite la comunicación serie con otros pines como es la librería SoftwareSerial.
+
 # Autores ✒️
 * **José Guadalupe de Jesús Cervera Barbosa** - *Trabajo general* - [JCerver](https://github.com/JCerver)
 * **Miguel Ángel Ramírez Lira** - *Trabajo general* - [mikeangelsoldier](https://github.com/mikeangelsoldier/)
 * **Alfredo Valivia Barajas** - *Trabajo general* - [alfredo97](https://github.com/alfredo97)
-
 
